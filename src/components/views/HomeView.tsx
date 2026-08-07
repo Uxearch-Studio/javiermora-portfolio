@@ -591,7 +591,7 @@ export default function HomeView() {
             <motion.button variants={popUp} key={p.name} onClick={() => setActive("cases")}
               className="group text-left bg-white border border-[#E4E4E7] rounded-xl overflow-hidden hover:border-[#0A0A0A] hover:shadow-md transition-all duration-200 flex flex-col md:h-full">
               {/* Image area — fixed height mobile, 40% flex on desktop */}
-              <div className="relative h-28 md:h-auto md:flex-[0_0_40%] w-full overflow-hidden shrink-0"
+              <div className="relative h-52 md:h-auto md:flex-[0_0_40%] w-full overflow-hidden shrink-0"
                 style={{ background: `linear-gradient(145deg, ${p.color}28 0%, ${p.color}10 100%)` }}>
                 {/* Abstract UI mockup shapes */}
                 <div className="absolute inset-0 p-4 flex flex-col gap-2 justify-center">
@@ -633,15 +633,19 @@ export default function HomeView() {
                   {lang === "en" ? p.en : p.es}
                 </p>
 
-                {/* CTA row */}
-                <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#F4F4F5]">
-                  <span className="inline-flex items-center px-1.5 py-[3px] rounded text-[10px] font-semibold"
-                    style={{ backgroundColor: `${p.color}18`, color: p.color }}>
-                    {p.metric}
+                {/* Metric badge */}
+                <span className="mt-1.5 self-start inline-flex items-center px-1.5 py-[3px] rounded text-[10px] font-semibold"
+                  style={{ backgroundColor: `${p.color}18`, color: p.color }}>
+                  {p.metric}
+                </span>
+
+                {/* CTA button */}
+                <div className="mt-2 flex items-center justify-between px-3 py-[10px] rounded-lg border border-[#E8E8EA] bg-[#F8F8F9] group-hover:border-[#0A0A0A] group-hover:bg-[#0A0A0A] transition-all duration-200">
+                  <span className="text-[12px] font-semibold text-[#0A0A0A] group-hover:text-white transition-colors duration-200">
+                    {lang === "en" ? "View Case Study" : "Ver Caso de Estudio"}
                   </span>
-                  <span className="text-[11px] font-semibold text-[#2563EB] flex items-center gap-0.5 group-hover:gap-1.5 transition-all duration-150">
-                    {lang === "en" ? "View Case" : "Ver Caso"}
-                    <span className="text-[12px]">→</span>
+                  <span className="text-[14px] font-medium text-[#B0B0BA] group-hover:text-white group-hover:translate-x-0.5 transition-all duration-200 inline-block">
+                    →
                   </span>
                 </div>
               </div>

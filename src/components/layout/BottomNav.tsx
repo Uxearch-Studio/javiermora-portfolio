@@ -45,7 +45,7 @@ const navItems: {
   {
     id: "about",
     labelEn: "About",
-    labelEs: "About",
+    labelEs: "Sobre",
     icon: (
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
         <circle cx="7.5" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.2"/>
@@ -74,17 +74,6 @@ const navItems: {
       </svg>
     ),
   },
-  {
-    id: "contact",
-    labelEn: "Contact",
-    labelEs: "Contacto",
-    icon: (
-      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-        <rect x="1.5" y="3.5" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="1.2"/>
-        <path d="M1.5 5.5l6 4 6-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
 ];
 
 export default function BottomNav() {
@@ -93,8 +82,6 @@ export default function BottomNav() {
 
   return (
     <nav className="sticky bottom-0 z-50 h-[62px] bg-[#050505] border-t border-white/[0.08] flex items-center justify-center px-2 md:px-[60px]">
-
-      {/* Single segmented control — one hardware module */}
       <div className="flex items-stretch h-[42px] border border-white/[0.18] rounded-[3px] overflow-hidden w-full md:w-auto">
         {navItems.map((item, i) => {
           const isActive = active === item.id;
@@ -113,20 +100,13 @@ export default function BottomNav() {
                 }
               `}
             >
-              {/* Active: top indicator line */}
               {isActive && (
                 <span className="absolute top-0 inset-x-0 h-[2px] bg-white" />
               )}
-
-              {/* Icon */}
               <span className="shrink-0">{item.icon}</span>
-
-              {/* Label */}
               <span className="text-[9px] md:text-[10px] font-medium tracking-[0.02em] leading-none whitespace-nowrap">
                 {label}
               </span>
-
-              {/* AI badge dot */}
               {item.id === "ai-design" && !isActive && (
                 <span className="absolute top-[5px] right-[10px] w-[4px] h-[4px] bg-[#3B82F6] rounded-full" />
               )}
@@ -134,7 +114,6 @@ export default function BottomNav() {
           );
         })}
       </div>
-
     </nav>
   );
 }
