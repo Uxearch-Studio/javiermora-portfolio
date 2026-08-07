@@ -208,8 +208,7 @@ function HexRadar({
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const n = items.length;
-  const cx = 140, cy = 126, R = 65;
-  const LR = 102;
+  const cx = 100, cy = 97, R = 78;
   const LEVELS = [0.25, 0.5, 0.75, 1.0];
 
   const polyPoints = (scale: number) =>
@@ -219,7 +218,7 @@ function HexRadar({
     }).join(" ");
 
   return (
-    <svg viewBox="0 0 280 256" className="w-full h-full" style={{ display: "block", minHeight: 80 }}>
+    <svg viewBox="0 0 200 194" className="w-full h-full" style={{ display: "block", minHeight: 80 }}>
       {/* Grid rings */}
       {LEVELS.map((lvl, li) => (
         <polygon key={li} points={polyPoints(lvl)}
@@ -244,41 +243,6 @@ function HexRadar({
         strokeWidth={1.5}
         strokeLinejoin="round"
       />
-
-      {/* Vertex labels — name + years */}
-      {items.map((s, i) => {
-        const angle = (i * 360) / n;
-        const rad = (angle - 90) * (Math.PI / 180);
-        const lx = cx + LR * Math.cos(rad);
-        const ly = cy + LR * Math.sin(rad);
-        const xNorm = Math.cos(rad);
-        const anchor = Math.abs(xNorm) < 0.2 ? "middle" : xNorm > 0 ? "start" : "end";
-        const words = s.shortLabel.split(" ");
-        const totalLines = words.length + 1;
-        const lineH = 7.5;
-        const firstY = ly - ((totalLines - 1) / 2) * lineH;
-        return (
-          <g key={`lbl-${s.id}`} className="cursor-pointer" onClick={() => onSelect(s)}>
-            {words.map((word, wi) => (
-              <text key={wi} x={lx} y={firstY + wi * lineH}
-                textAnchor={anchor}
-                fill="rgba(255,255,255,0.50)"
-                fontSize={6.5} fontWeight={600}
-                fontFamily="Red Hat Display, sans-serif">
-                {word}
-              </text>
-            ))}
-            <text x={lx} y={firstY + words.length * lineH}
-              textAnchor={anchor}
-              fill={s.color}
-              fontSize={6} fontWeight={700}
-              fontFamily="Red Hat Display, sans-serif">
-              {s.years}
-            </text>
-          </g>
-        );
-      })}
-
       {/* Vertex dots */}
       {items.map((s, i) => {
         const angle = (i * 360) / n;
@@ -301,7 +265,6 @@ function HexRadar({
           </g>
         );
       })}
-
       {/* Center score */}
       <text x={cx} y={cy + 7} textAnchor="middle"
         fill="rgba(255,255,255,0.60)" fontSize={18} fontWeight={800}
@@ -709,39 +672,28 @@ export default function HomeView() {
               <HexRadar items={SKILLS} onSelect={setSelectedSkill} />
             </div>
 
-            {/* Compact skill bar chart */}
-            <div className="shrink-0 mt-1 pt-1.5 border-t border-white/[0.06]">
-              <div className="flex items-end gap-[3px] h-[26px]">
-                {SKILLS.map((s) => {
-                  const barH = Math.max(5, Math.round((s.score / 100) * 26));
-                  return (
-                    <button key={s.id} onClick={() => setSelectedSkill(s)} title={s.label}
-                      className="flex-1 flex items-end h-full cursor-pointer group">
-                      <div className="w-full rounded-t-[2px] overflow-hidden relative group-hover:opacity-75 transition-opacity"
-                        style={{ height: barH }}>
-                        <div className="absolute inset-0" style={{ background: `${s.color}30` }} />
-                        <div className="absolute bottom-0 inset-x-0 rounded-t-[2px]"
-                          style={{ height: "55%", background: s.color }} />
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="flex gap-[3px] mt-[3px]">
-                {SKILLS.map((s) => {
-                  const abbr: Record<string, string> = { problem: "PS", research: "UR", systems: "DS", proto: "PT", ai: "AI" };
-                  return (
-                    <div key={s.id} className="flex-1 flex flex-col items-center gap-[1.5px]">
-                      <span className="font-bold leading-none" style={{ fontSize: 6.5, color: s.color }}>
-                        {abbr[s.id]}
-                      </span>
-                      <span className="font-medium leading-none" style={{ fontSize: 5.5, color: "rgba(255,255,255,0.28)" }}>
-                        {s.years}
-                      </span>
+            {/* Experience bars — readable skill rows */}
+            <div className="shrink-0 mt-1 pt-1.5 border-t border-white/[0.06] space-y-[4px]">
+              {SKILLS.map((s) => {
+                const months = s.years.endsWith("y") ? parseInt(s.years) * 12 : parseInt(s.years);
+                const ratio = months / 96; // 96 = 8 years max
+                return (
+                  <button key={s.id} onClick={() => setSelectedSkill(s)}
+                    className="w-full flex items-center gap-2 group">
+                    <div className="w-[5px] h-[5px] rounded-full shrink-0" style={{ backgroundColor: s.color }} />
+                    <span className="w-[56px] shrink-0 text-left text-[9.5px] font-medium leading-none truncate"
+                      style={{ color: "rgba(255,255,255,0.55)" }}>
+                      {s.label}
+                    </span>
+                    <div className="flex-1 h-[3px] rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+                      <div className="h-full rounded-full" style={{ width: `${ratio * 100}%`, background: s.color, opacity: 0.75 }} />
                     </div>
-                  );
-                })}
-              </div>
+                    <span className="shrink-0 text-[9px] font-bold tabular-nums" style={{ color: s.color }}>
+                      {s.years}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </motion.div>
         </motion.div>
