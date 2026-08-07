@@ -176,7 +176,7 @@ const SKILLS: SkillItem[] = [
     tags: ["Problem Framing", "JTBD", "Opportunity Trees", "Root Cause Analysis"],
   },
   {
-    id: "research", label: "User Research", shortLabel: "Research", score: 85, color: "#10B981",
+    id: "research", label: "User Research", shortLabel: "Research", score: 85, color: "#EC4899",
     desc: {
       en: "Building empathy through structured observation. Research is how I avoid building the wrong thing with great execution. The goal: surface what people don't say. From guerrilla testing to contextual inquiry.",
       es: "Construir empatía a través de observación estructurada. La investigación es cómo evito construir lo incorrecto con gran ejecución. El objetivo: descubrir lo que la gente no dice.",
@@ -657,8 +657,8 @@ export default function HomeView() {
             {/* Header */}
             <div className="flex items-center justify-between shrink-0 mb-2">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.07em] leading-none"
-                  style={{ color: "rgba(255,255,255,0.65)" }}>
+                <p className="text-[10px] font-bold uppercase tracking-[0.1em] leading-none"
+                  style={{ color: "rgba(255,255,255,0.55)" }}>
                   {lang === "en" ? "Learning Radar" : "Radar de Skills"}
                 </p>
                 <p className="text-[10px] mt-0.5" style={{ color: "rgba(255,255,255,0.38)" }}>
