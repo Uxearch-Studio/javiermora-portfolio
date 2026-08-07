@@ -145,6 +145,7 @@ interface SkillItem {
   label: string;
   shortLabel: string;
   score: number;
+  years: string;
   color: string;
   desc: { en: string; es: string };
   tags: string[];
@@ -152,23 +153,7 @@ interface SkillItem {
 
 const SKILLS: SkillItem[] = [
   {
-    id: "ai", label: "AI Native Design", shortLabel: "AI Native", score: 94, color: "#2563EB",
-    desc: {
-      en: "Designing products where AI is the core interaction layer — not a feature bolted on. I explore how to calibrate trust, set honest expectations, and build conversations between humans and models that feel intentional. I also use AI as a coding partner: this portfolio is built with Claude Code — designing and shipping at production speed without an engineering dependency.",
-      es: "Diseñar productos donde la IA es la capa central de interacción, no una función adicional. Exploro cómo calibrar confianza y construir conversaciones intencionales entre humanos y modelos. También uso IA como partner de código — este portafolio está construido con Claude Code, diseñando y publicando a velocidad de producción.",
-    },
-    tags: ["Prompt Design", "Trust Calibration", "Agentic UX", "Claude Code", "Next.js", "Framer Motion"],
-  },
-  {
-    id: "systems", label: "Design Systems", shortLabel: "Systems", score: 97, color: "#059669",
-    desc: {
-      en: "Systems thinking applied to design at scale. Built systems from scratch for startups needing speed without losing consistency — tokens, component APIs, documentation, and the team culture that makes it stick.",
-      es: "Pensamiento sistémico aplicado al diseño. He construido sistemas para startups que necesitaban velocidad sin perder consistencia — tokens, APIs de componentes, documentación y la cultura de equipo.",
-    },
-    tags: ["Token Architecture", "Component APIs", "Multi-product", "Figma Libraries"],
-  },
-  {
-    id: "problem", label: "Problem Solving", shortLabel: "Problem", score: 93, color: "#D97706",
+    id: "problem", label: "Problem Solving", shortLabel: "Problem", score: 93, years: "6y", color: "#D97706",
     desc: {
       en: "Translating vague, high-stakes business problems into clear, actionable design challenges. The most underrated skill in product design. You cannot design the right solution without first defining the right problem.",
       es: "Traducir problemas de negocio vagos en desafíos de diseño claros. La habilidad más subestimada del diseño de producto. No puedes diseñar la solución correcta sin definir primero el problema correcto.",
@@ -176,7 +161,7 @@ const SKILLS: SkillItem[] = [
     tags: ["Problem Framing", "JTBD", "Opportunity Trees", "Root Cause Analysis"],
   },
   {
-    id: "research", label: "User Research", shortLabel: "Research", score: 85, color: "#EC4899",
+    id: "research", label: "User Research", shortLabel: "Research", score: 92, years: "8y", color: "#EC4899",
     desc: {
       en: "Building empathy through structured observation. Research is how I avoid building the wrong thing with great execution. The goal: surface what people don't say. From guerrilla testing to contextual inquiry.",
       es: "Construir empatía a través de observación estructurada. La investigación es cómo evito construir lo incorrecto con gran ejecución. El objetivo: descubrir lo que la gente no dice.",
@@ -184,12 +169,28 @@ const SKILLS: SkillItem[] = [
     tags: ["Contextual Inquiry", "Usability Testing", "Jobs Theory", "Synthesis"],
   },
   {
-    id: "proto", label: "Prototyping", shortLabel: "Prototyping", score: 90, color: "#EF4444",
+    id: "systems", label: "Design Systems", shortLabel: "Systems", score: 97, years: "5y", color: "#059669",
+    desc: {
+      en: "Systems thinking applied to design at scale. Built systems from scratch for startups needing speed without losing consistency — tokens, component APIs, documentation, and the team culture that makes it stick.",
+      es: "Pensamiento sistémico aplicado al diseño. He construido sistemas para startups que necesitaban velocidad sin perder consistencia — tokens, APIs de componentes, documentación y la cultura de equipo.",
+    },
+    tags: ["Token Architecture", "Component APIs", "Multi-product", "Figma Libraries"],
+  },
+  {
+    id: "proto", label: "Prototyping", shortLabel: "Prototyping", score: 90, years: "6y", color: "#EF4444",
     desc: {
       en: "A prototype is worth a thousand meetings. From rough sketches to interactive Figma flows to functional code — the right fidelity at the right moment. Prototyping forces specificity and exposes assumptions early.",
       es: "Un prototipo vale mil reuniones. Desde bocetos hasta flujos en Figma hasta código funcional — la fidelidad correcta en el momento correcto. Prototipar fuerza especificidad y expone supuestos temprano.",
     },
     tags: ["Figma Advanced", "ProtoPie", "Code Prototypes", "Rapid Iteration"],
+  },
+  {
+    id: "ai", label: "AI Native Design", shortLabel: "AI Native", score: 72, years: "9m", color: "#2563EB",
+    desc: {
+      en: "Designing products where AI is the core interaction layer — not a feature bolted on. I explore how to calibrate trust, set honest expectations, and build conversations between humans and models that feel intentional. I also use AI as a coding partner: this portfolio is built with Claude Code — designing and shipping at production speed without an engineering dependency.",
+      es: "Diseñar productos donde la IA es la capa central de interacción, no una función adicional. Exploro cómo calibrar confianza y construir conversaciones intencionales entre humanos y modelos. También uso IA como partner de código — este portafolio está construido con Claude Code, diseñando y publicando a velocidad de producción.",
+    },
+    tags: ["Prompt Design", "Trust Calibration", "Agentic UX", "Claude Code", "Next.js", "Framer Motion"],
   },
 ];
 
@@ -207,7 +208,8 @@ function HexRadar({
 }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const n = items.length;
-  const cx = 100, cy = 97, R = 78;
+  const cx = 140, cy = 126, R = 65;
+  const LR = 102;
   const LEVELS = [0.25, 0.5, 0.75, 1.0];
 
   const polyPoints = (scale: number) =>
@@ -217,8 +219,8 @@ function HexRadar({
     }).join(" ");
 
   return (
-    <svg viewBox="0 0 200 194" className="w-full h-full" style={{ display: "block", minHeight: 80 }}>
-      {/* Grid rings — monochromatic */}
+    <svg viewBox="0 0 280 256" className="w-full h-full" style={{ display: "block", minHeight: 80 }}>
+      {/* Grid rings */}
       {LEVELS.map((lvl, li) => (
         <polygon key={li} points={polyPoints(lvl)}
           fill="none"
@@ -231,8 +233,7 @@ function HexRadar({
         return <line key={i} x1={cx} y1={cy} x2={x} y2={y}
           stroke="rgba(255,255,255,0.06)" strokeWidth={0.6} />;
       })}
-
-      {/* Value polygon — monochromatic fill, white stroke */}
+      {/* Value polygon */}
       <polygon
         points={items.map((s, i) => {
           const { x, y } = polarXY(cx, cy, R * (s.score / 100), (i * 360) / n);
@@ -244,7 +245,41 @@ function HexRadar({
         strokeLinejoin="round"
       />
 
-      {/* Vertex dots — colored, prominent */}
+      {/* Vertex labels — name + years */}
+      {items.map((s, i) => {
+        const angle = (i * 360) / n;
+        const rad = (angle - 90) * (Math.PI / 180);
+        const lx = cx + LR * Math.cos(rad);
+        const ly = cy + LR * Math.sin(rad);
+        const xNorm = Math.cos(rad);
+        const anchor = Math.abs(xNorm) < 0.2 ? "middle" : xNorm > 0 ? "start" : "end";
+        const words = s.shortLabel.split(" ");
+        const totalLines = words.length + 1;
+        const lineH = 7.5;
+        const firstY = ly - ((totalLines - 1) / 2) * lineH;
+        return (
+          <g key={`lbl-${s.id}`} className="cursor-pointer" onClick={() => onSelect(s)}>
+            {words.map((word, wi) => (
+              <text key={wi} x={lx} y={firstY + wi * lineH}
+                textAnchor={anchor}
+                fill="rgba(255,255,255,0.50)"
+                fontSize={6.5} fontWeight={600}
+                fontFamily="Red Hat Display, sans-serif">
+                {word}
+              </text>
+            ))}
+            <text x={lx} y={firstY + words.length * lineH}
+              textAnchor={anchor}
+              fill={s.color}
+              fontSize={6} fontWeight={700}
+              fontFamily="Red Hat Display, sans-serif">
+              {s.years}
+            </text>
+          </g>
+        );
+      })}
+
+      {/* Vertex dots */}
       {items.map((s, i) => {
         const angle = (i * 360) / n;
         const dot = polarXY(cx, cy, R * (s.score / 100), angle);
@@ -257,11 +292,9 @@ function HexRadar({
             className="cursor-pointer"
           >
             <circle cx={dot.x} cy={dot.y} r={14} fill="transparent" />
-            {/* Outer glow */}
             <circle cx={dot.x} cy={dot.y} r={isHov ? 12 : 7}
               fill={s.color} opacity={isHov ? 0.30 : 0.15}
               style={{ transition: "r 0.15s, opacity 0.15s" }} />
-            {/* Dot */}
             <circle cx={dot.x} cy={dot.y} r={isHov ? 5.5 : 4}
               fill={s.color}
               style={{ transition: "r 0.15s" }} />
@@ -273,7 +306,7 @@ function HexRadar({
       <text x={cx} y={cy + 7} textAnchor="middle"
         fill="rgba(255,255,255,0.60)" fontSize={18} fontWeight={800}
         fontFamily="Red Hat Display, sans-serif">
-        92
+        97
       </text>
       <text x={cx} y={cy + 18} textAnchor="middle"
         fill="rgba(255,255,255,0.22)" fontSize={7} fontWeight={500}
@@ -676,26 +709,39 @@ export default function HomeView() {
               <HexRadar items={SKILLS} onSelect={setSelectedSkill} />
             </div>
 
-            {/* Skill rows — better contrast */}
-            <div className="space-y-[2px] shrink-0 mt-1">
-              {SKILLS.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => setSelectedSkill(s)}
-                  className="w-full flex items-center gap-2 px-2 py-[5px] rounded-[4px] group hover:bg-white/[0.05] transition-colors text-left"
-                >
-                  <div className="w-[7px] h-[7px] rounded-full shrink-0" style={{ backgroundColor: s.color }} />
-                  <span className="flex-1 text-[11px] leading-none truncate transition-colors"
-                    style={{ color: "rgba(255,255,255,0.58)" }}>
-                    {s.label}
-                  </span>
-                  <span className="text-[12px] font-bold tabular-nums shrink-0" style={{ color: s.color }}>
-                    {s.score}
-                  </span>
-                  <span className="text-[10px] shrink-0 transition-colors"
-                    style={{ color: "rgba(255,255,255,0.25)" }}>→</span>
-                </button>
-              ))}
+            {/* Compact skill bar chart */}
+            <div className="shrink-0 mt-1 pt-1.5 border-t border-white/[0.06]">
+              <div className="flex items-end gap-[3px] h-[26px]">
+                {SKILLS.map((s) => {
+                  const barH = Math.max(5, Math.round((s.score / 100) * 26));
+                  return (
+                    <button key={s.id} onClick={() => setSelectedSkill(s)} title={s.label}
+                      className="flex-1 flex items-end h-full cursor-pointer group">
+                      <div className="w-full rounded-t-[2px] overflow-hidden relative group-hover:opacity-75 transition-opacity"
+                        style={{ height: barH }}>
+                        <div className="absolute inset-0" style={{ background: `${s.color}30` }} />
+                        <div className="absolute bottom-0 inset-x-0 rounded-t-[2px]"
+                          style={{ height: "55%", background: s.color }} />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex gap-[3px] mt-[3px]">
+                {SKILLS.map((s) => {
+                  const abbr: Record<string, string> = { problem: "PS", research: "UR", systems: "DS", proto: "PT", ai: "AI" };
+                  return (
+                    <div key={s.id} className="flex-1 flex flex-col items-center gap-[1.5px]">
+                      <span className="font-bold leading-none" style={{ fontSize: 6.5, color: s.color }}>
+                        {abbr[s.id]}
+                      </span>
+                      <span className="font-medium leading-none" style={{ fontSize: 5.5, color: "rgba(255,255,255,0.28)" }}>
+                        {s.years}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         </motion.div>
