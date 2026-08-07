@@ -475,10 +475,10 @@ export default function HomeView() {
 
   return (
     <>
-      <motion.div variants={stagger} initial="hidden" animate="show" className="h-full flex flex-col gap-3">
+      <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col gap-3 md:h-full">
 
         {/* ── ROW 1: Bio + Career ─────────────────────────── */}
-        <motion.div variants={rowStagger} className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <motion.div variants={rowStagger} className="grid grid-cols-1 md:grid-cols-2 gap-3 md:flex-1 md:min-h-0">
 
           {/* Bio card */}
           <motion.div variants={slideFromLeft} className="bg-white border border-[#E4E4E7] rounded-xl p-4 flex flex-col overflow-hidden">
@@ -575,17 +575,17 @@ export default function HomeView() {
               ))}
             </div>
 
-            {/* Timeline — no scroll; absolute fade signals continuation on compact screens */}
-            <div className="flex-1 min-h-0 relative overflow-hidden">
+            {/* Timeline — desktop: constrained height with fade; mobile: full height, no clip */}
+            <div className="relative md:flex-1 md:min-h-0 md:overflow-hidden">
               <CareerTimeline lang={lang} />
-              <div className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none"
+              <div className="hidden md:block absolute bottom-0 left-0 right-0 h-12 pointer-events-none"
                 style={{ background: "linear-gradient(to top, #0A0A0A 60%, transparent 100%)" }} />
             </div>
           </motion.div>
         </motion.div>
 
         {/* ── ROW 2: Projects + Skill Radar ───────────────── */}
-        <motion.div variants={rowStagger} className="flex-1 min-h-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <motion.div variants={rowStagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:flex-1 md:min-h-0">
 
           {projects.map((p) => (
             <motion.button variants={popUp} key={p.name} onClick={() => setActive("cases")}

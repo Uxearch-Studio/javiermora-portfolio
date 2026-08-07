@@ -92,10 +92,10 @@ export default function BottomNav() {
   const { lang } = useLang();
 
   return (
-    <nav className="sticky bottom-0 z-50 h-[62px] bg-[#050505] border-t border-white/[0.08] flex items-center justify-center px-[60px]">
+    <nav className="sticky bottom-0 z-50 h-[62px] bg-[#050505] border-t border-white/[0.08] flex items-center justify-center px-2 md:px-[60px]">
 
       {/* Single segmented control — one hardware module */}
-      <div className="flex items-stretch h-[42px] border border-white/[0.18] rounded-[3px] overflow-hidden">
+      <div className="flex items-stretch h-[42px] border border-white/[0.18] rounded-[3px] overflow-hidden w-full md:w-auto">
         {navItems.map((item, i) => {
           const isActive = active === item.id;
           const label = lang === "en" ? item.labelEn : item.labelEs;
@@ -104,8 +104,8 @@ export default function BottomNav() {
               key={item.id}
               onClick={() => setActive(item.id)}
               className={`
-                relative flex flex-col items-center justify-center gap-[4px]
-                w-[74px] shrink-0 transition-colors duration-150 select-none
+                relative flex flex-col items-center justify-center gap-[3px]
+                flex-1 md:w-[74px] md:flex-none transition-colors duration-150 select-none
                 ${i < navItems.length - 1 ? "border-r border-white/[0.1]" : ""}
                 ${isActive
                   ? "bg-white/[0.12] text-white"
@@ -122,7 +122,7 @@ export default function BottomNav() {
               <span className="shrink-0">{item.icon}</span>
 
               {/* Label */}
-              <span className="text-[10px] font-medium tracking-[0.02em] leading-none whitespace-nowrap">
+              <span className="text-[9px] md:text-[10px] font-medium tracking-[0.02em] leading-none whitespace-nowrap">
                 {label}
               </span>
 
