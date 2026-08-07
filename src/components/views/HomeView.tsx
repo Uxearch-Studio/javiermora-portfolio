@@ -589,9 +589,9 @@ export default function HomeView() {
 
           {projects.map((p) => (
             <motion.button variants={popUp} key={p.name} onClick={() => setActive("cases")}
-              className="group text-left bg-white border border-[#E4E4E7] rounded-xl overflow-hidden hover:border-[#0A0A0A] hover:shadow-md transition-all duration-200 flex flex-col h-full">
-              {/* Image area — richer mockup placeholder */}
-              <div className="relative flex-[0_0_40%] w-full overflow-hidden"
+              className="group text-left bg-white border border-[#E4E4E7] rounded-xl overflow-hidden hover:border-[#0A0A0A] hover:shadow-md transition-all duration-200 flex flex-col md:h-full">
+              {/* Image area — fixed height mobile, 40% flex on desktop */}
+              <div className="relative h-28 md:h-auto md:flex-[0_0_40%] w-full overflow-hidden shrink-0"
                 style={{ background: `linear-gradient(145deg, ${p.color}28 0%, ${p.color}10 100%)` }}>
                 {/* Abstract UI mockup shapes */}
                 <div className="absolute inset-0 p-4 flex flex-col gap-2 justify-center">
