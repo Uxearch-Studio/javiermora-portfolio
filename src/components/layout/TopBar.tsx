@@ -35,7 +35,7 @@ export default function TopBar() {
             priority
           />
           <div className="flex items-center gap-2">
-            <span className="text-white/40 text-[13px] font-medium hidden sm:block">Product Designer</span>
+            <span className="text-white/40 text-[13px] font-medium hidden sm:block">Senior Product Designer</span>
             <span className="text-white/20 text-[13px] hidden sm:block">·</span>
             <span className="text-white text-[13px] font-semibold">{section}</span>
           </div>
@@ -43,43 +43,19 @@ export default function TopBar() {
 
         {/* Right: availability + contact + lang toggle */}
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-1.5">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
-            </span>
-            <span className="text-emerald-400 text-[11px] font-medium">
-              {lang === "en" ? "Open to work" : "Disponible"}
-            </span>
-          </div>
-
-          {/* Contact icon button */}
+          {/* Contact button */}
           <button
             onClick={() => setActive("contact")}
-            title={lang === "en" ? "Contact" : "Contacto"}
-            className="flex items-center justify-center w-[28px] h-[28px] rounded-[5px] transition-all duration-150"
-            style={{
-              background: contactActive ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.06)",
-              border: `1px solid ${contactActive ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.10)"}`,
-              color: contactActive ? "rgba(255,255,255,0.90)" : "rgba(255,255,255,0.40)",
-            }}
-            onMouseEnter={e => {
-              if (!contactActive) {
-                (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.70)";
-                (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.10)";
-              }
-            }}
-            onMouseLeave={e => {
-              if (!contactActive) {
-                (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.40)";
-                (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.06)";
-              }
-            }}
+            className="flex items-center gap-1.5 h-[26px] px-3 rounded-[5px] transition-all duration-150 bg-white hover:bg-white/90 active:scale-[0.97]"
+            style={{ border: "1px solid rgba(0,0,0,0.08)" }}
           >
-            <svg width="13" height="13" viewBox="0 0 15 15" fill="none">
-              <rect x="1.5" y="3.5" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="1.2"/>
-              <path d="M1.5 5.5l6 4 6-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+            <svg width="12" height="12" viewBox="0 0 15 15" fill="none" style={{ color: "#0A0A0A" }}>
+              <rect x="1.5" y="3.5" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="1.3"/>
+              <path d="M1.5 5.5l6 4 6-4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
             </svg>
+            <span className="text-[12px] font-semibold text-[#0A0A0A] leading-none">
+              {lang === "en" ? "Contact" : "Contacto"}
+            </span>
           </button>
 
           {/* Segmented lang control */}

@@ -9,9 +9,9 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="flex flex-col min-h-dvh md:h-dvh bg-[#FAFAFA]">
+    <div className="grid grid-rows-[auto_1fr_auto] min-h-dvh lg:h-dvh bg-[#FAFAFA]">
       <TopBar />
-      <main className="flex-1 md:min-h-0 md:overflow-y-auto content-area">
+      <main className="lg:min-h-0 lg:overflow-y-auto content-area">
         {children}
       </main>
       <BottomNav />

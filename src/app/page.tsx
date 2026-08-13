@@ -25,14 +25,14 @@ function ActiveView() {
   };
 
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence mode="wait">
       <motion.div
         key={active}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.18 }}
-        className="relative h-full"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        className="relative lg:h-full"
       >
         {views[active]}
       </motion.div>
