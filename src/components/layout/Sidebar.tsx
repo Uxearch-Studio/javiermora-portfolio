@@ -116,11 +116,11 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
       {/* Sidebar panel */}
       <aside
         className={`
-          fixed top-0 left-0 h-full w-[240px] z-40 flex flex-col
+          fixed top-0 left-0 h-full w-[240px] z-40 flex flex-col shrink-0
           bg-[#0A0A0A] border-r border-white/[0.06]
           transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
-          lg:translate-x-0 lg:sticky lg:h-screen
-          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+          lg:static lg:top-auto lg:left-auto lg:z-auto lg:self-stretch lg:translate-x-0
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
       >
         {/* Logo — 20px horizontal, 20px top */}
