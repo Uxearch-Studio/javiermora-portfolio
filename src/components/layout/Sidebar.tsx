@@ -73,6 +73,17 @@ const navItems: { id: Section; labelEn: string; labelEs: string; icon: React.Rea
       </svg>
     ),
   },
+  {
+    id: "contact" as Section,
+    labelEn: "Contact",
+    labelEs: "Contacto",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+        <rect x="1.5" y="3.5" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="1.2"/>
+        <path d="M1.5 5l6 4 6-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
 ];
 
 interface SidebarProps {
@@ -109,7 +120,7 @@ export default function Sidebar({ mobileOpen, onClose, collapsed, onToggleCollap
       <aside
         className={`
           fixed top-0 left-0 h-full z-40 flex flex-col shrink-0
-          bg-[#18181B] border-r border-white/[0.06]
+          bg-[#141D2C] border-r border-white/[0.06]
           transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
           lg:relative lg:top-auto lg:left-auto lg:z-[50] lg:self-stretch
           ${collapsed ? "w-[52px]" : "w-[240px]"}
