@@ -134,9 +134,18 @@ export default function ContactView() {
   const [role, setRole] = useState<RoleKey | null>(null);
   const [purpose, setPurpose] = useState<PurposeKey | null>(null);
   const [msgBody, setMsgBody] = useState("");
+  const [botCheckPassed, setBotCheckPassed] = useState(false);
+  const [wrongAnswer, setWrongAnswer] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
 
   const selectedRole    = ROLES.find((r) => r.id === role);
   const selectedPurpose = PURPOSES.find((p) => p.id === purpose);
+
+  // Reset bot check when selections change so each new intent gets verified
+  useEffect(() => {
+    setBotCheckPassed(false);
+    setWrongAnswer(false);
+  }, [role, purpose]);
 
   // Auto-fill message when selections change; user can freely edit afterwards
   useEffect(() => {
@@ -206,7 +215,7 @@ export default function ContactView() {
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 }}
           className="mb-6"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#52525B] mb-3">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[#3F3F46] mb-3">
             {lang === "en" ? "Who are you?" : "¿Quién eres?"}
           </p>
           <motion.div className="flex flex-wrap gap-2" variants={stagger} initial="hidden" animate="show">
@@ -236,7 +245,7 @@ export default function ContactView() {
               variants={fadeUp} initial="hidden" animate="show" exit="exit"
               className="mb-6"
             >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#52525B] mb-3">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[#3F3F46] mb-3">
                 {lang === "en" ? "What brings you here?" : "¿Qué te trae aquí?"}
               </p>
               <motion.div className="flex flex-wrap gap-2" variants={stagger} initial="hidden" animate="show">
@@ -259,43 +268,102 @@ export default function ContactView() {
           )}
         </AnimatePresence>
 
-        {/* Editable message card — appears once a role is chosen */}
+        {/* Step 3: Message — appears once a role is chosen */}
         <AnimatePresence>
           {selectedRole && (
-            <motion.div
-              key="message-card"
-              variants={fadeUp} initial="hidden" animate="show" exit="exit"
-              className="rounded-xl border border-[#E4E4E7] bg-white p-5 mb-2"
-            >
-              <div className="flex items-start gap-3 mb-4">
-                <div className="w-8 h-8 rounded-full bg-[#F4F4F5] flex items-center justify-center shrink-0 text-[14px]">
-                  {selectedRole.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <textarea
-                    value={msgBody}
-                    onChange={(e) => setMsgBody(e.target.value)}
-                    placeholder={
-                      lang === "en"
-                        ? "Write your message here…"
-                        : "Escribe tu mensaje aquí…"
-                    }
-                    rows={3}
-                    className="w-full text-[13px] text-[#0A0A0A] leading-relaxed resize-none bg-transparent outline-none border-none placeholder:text-[#A1A1AA]"
-                  />
-                  {!selectedPurpose && (
-                    <p className="text-[12px] text-[#52525B] mt-1">
-                      {lang === "en"
-                        ? "Select a reason above to pre-fill, or write freely."
-                        : "Selecciona un motivo para pre-llenar, o escribe libremente."}
-                    </p>
-                  )}
+            <motion.div key="message-section" variants={fadeUp} initial="hidden" animate="show" exit="exit">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[#3F3F46] mb-3">
+                {lang === "en" ? "Your message" : "Tu mensaje"}
+              </p>
+
+              {/* Editable message card */}
+              <div className="rounded-xl border border-[#E4E4E7] bg-white p-5 mb-4">
+                {/* Honeypot — hidden from humans, traps bots */}
+                <input
+                  type="text"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, width: 0 }}
+                />
+
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-[#F4F4F5] flex items-center justify-center shrink-0 text-[14px]">
+                    {selectedRole.icon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <textarea
+                      value={msgBody}
+                      onChange={(e) => setMsgBody(e.target.value)}
+                      placeholder={lang === "en" ? "Write your message here…" : "Escribe tu mensaje aquí…"}
+                      rows={3}
+                      className="w-full text-[13px] text-[#0A0A0A] leading-relaxed resize-none bg-transparent outline-none border-none placeholder:text-[#A1A1AA]"
+                    />
+                    {!selectedPurpose && (
+                      <p className="text-[12px] text-[#52525B] mt-1">
+                        {lang === "en"
+                          ? "Select a reason above to pre-fill, or write freely."
+                          : "Selecciona un motivo para pre-llenar, o escribe libremente."}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {canSend && (
-                <a
-                  href={mailtoHref}
+              {/* Anti-bot design check — shown when message is ready */}
+              <AnimatePresence>
+                {canSend && !botCheckPassed && (
+                  <motion.div
+                    key="bot-check"
+                    variants={fadeUp} initial="hidden" animate="show" exit="exit"
+                    className="rounded-xl border border-[#E4E4E7] bg-white p-5 mb-4"
+                  >
+                    <p className="text-[13px] font-semibold text-[#0A0A0A] mb-1">
+                      {lang === "en" ? "Quick design check 🎨" : "Chequeo de diseño 🎨"}
+                    </p>
+                    <p className="text-[12px] text-[#52525B] mb-4">
+                      {lang === "en"
+                        ? "Which color is most associated with trust?"
+                        : "¿Qué color se asocia más con la confianza?"}
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      {[
+                        { color: "#DC2626", label: lang === "en" ? "Red"    : "Rojo",     correct: false },
+                        { color: "#2563EB", label: lang === "en" ? "Blue"   : "Azul",     correct: true  },
+                        { color: "#CA8A04", label: lang === "en" ? "Yellow" : "Amarillo", correct: false },
+                        { color: "#16A34A", label: lang === "en" ? "Green"  : "Verde",    correct: false },
+                      ].map((opt) => (
+                        <button
+                          key={opt.color}
+                          onClick={() => {
+                            if (honeypot) return;
+                            if (opt.correct) { setBotCheckPassed(true); setWrongAnswer(false); }
+                            else setWrongAnswer(true);
+                          }}
+                          className="flex items-center gap-2 px-3 py-2 rounded-full border border-[#E4E4E7] hover:border-[#A1A1AA] transition-colors"
+                        >
+                          <span className="w-4 h-4 rounded-full shrink-0" style={{ background: opt.color }} />
+                          <span className="text-[13px] text-[#3F3F46] font-medium">{opt.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                    {wrongAnswer && (
+                      <p className="text-[12px] text-[#DC2626] mt-3">
+                        {lang === "en" ? "Hmm, think like a designer 😉" : "Mmm, piensa como diseñador 😉"}
+                      </p>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Send button — unlocked after bot check */}
+              {canSend && botCheckPassed && (
+                <motion.a
+                  variants={fadeUp} initial="hidden" animate="show"
+                  href={honeypot ? "#" : mailtoHref}
                   className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#1a1a1a] text-white text-[13px] font-semibold rounded-lg transition-colors"
                 >
                   <svg width="13" height="13" viewBox="0 0 15 15" fill="none">
@@ -303,7 +371,7 @@ export default function ContactView() {
                     <path d="M1.5 5l6 4 6-4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
                   </svg>
                   {lang === "en" ? "Send message" : "Enviar mensaje"}
-                </a>
+                </motion.a>
               )}
             </motion.div>
           )}
@@ -343,7 +411,7 @@ export default function ContactView() {
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-[13px] font-semibold text-[#0A0A0A] group-hover:text-[#0A66C2] transition-colors">LinkedIn</p>
-            <p className="text-[11px] text-[#52525B] truncate">in/javiermoraux</p>
+            <p className="text-[12px] text-[#52525B] truncate">in/javiermoraux</p>
           </div>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-[#52525B] group-hover:text-[#0A66C2] shrink-0 transition-colors">
             <path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
@@ -364,7 +432,7 @@ export default function ContactView() {
             >
               <span className="text-[#52525B] group-hover:text-[#0A0A0A] transition-colors">{s.icon}</span>
               <span className="text-[13px] text-[#3F3F46] group-hover:text-[#0A0A0A] transition-colors flex-1">{s.labelEn}</span>
-              <span className="text-[11px] text-[#52525B] truncate hidden sm:block">{s.handle}</span>
+              <span className="text-[12px] text-[#52525B] truncate hidden sm:block">{s.handle}</span>
             </a>
           ))}
         </motion.div>
