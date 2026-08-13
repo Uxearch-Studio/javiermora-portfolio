@@ -72,25 +72,25 @@
   :focus-visible { outline: 2px solid #2563EB; outline-offset: 2px; }
 }
 
-/* Content area — aligned to nav's 60px gutter, fills viewport height */
+/* Content area — equal padding all sides */
 .content-area {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 48px 60px;
+  padding: 48px;
   width: 100%;
   height: 100%;
 }
 
-/* Tablet (768-1023px): keep wide padding, switch to auto height so page scrolls */
+/* Tablet (768-1023px): switch to auto height so page scrolls */
 @media (max-width: 1023px) {
   .content-area {
     height: auto;
   }
 }
-/* Mobile (<768px): compact padding */
+/* Mobile (<768px): compact equal padding */
 @media (max-width: 767px) {
   .content-area {
-    padding: 24px 20px;
+    padding: 24px;
   }
 }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNav, Section } from "@/context/NavContext";
 import { useLang } from "@/context/LangContext";
@@ -86,9 +87,11 @@ const navItems: { id: Section; labelEn: string; labelEs: string; icon: React.Rea
 interface SidebarProps {
   mobileOpen: boolean;
   onClose: () => void;
+  collapsed: boolean;
+  onToggleCollapse: () => void;
 }
 
-export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
+export default function Sidebar({ mobileOpen, onClose, collapsed, onToggleCollapse }: SidebarProps) {
   const { active, setActive } = useNav();
   const { lang, toggleLang } = useLang();
 
@@ -113,34 +116,40 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         )}
       </AnimatePresence>
 
-      {/* Sidebar panel */}
       <aside
         className={`
-          fixed top-0 left-0 h-full w-[240px] z-40 flex flex-col shrink-0
-          bg-[#0A0A0A] border-r border-white/[0.06]
-          transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
-          lg:static lg:top-auto lg:left-auto lg:z-auto lg:self-stretch lg:translate-x-0
+          fixed top-0 left-0 h-full z-40 flex flex-col shrink-0
+          bg-[#18181B] border-r border-white/[0.06]
+          transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
+          lg:static lg:top-auto lg:left-auto lg:z-auto lg:self-stretch
+          ${collapsed ? "w-[52px]" : "w-[240px]"}
           ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
+        style={{ overflow: "visible" }}
       >
-        {/* Logo — 20px horizontal, 20px top */}
-        <div className="px-5 pt-5 pb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0">
-              <span className="text-[#0A0A0A] text-[11px] font-bold tracking-tight">JM</span>
-            </div>
-            <div className="min-w-0">
+        {/* Brand header */}
+        <div className={`flex items-center gap-3 pt-5 pb-4 ${collapsed ? "justify-center px-0" : "px-4"}`}>
+          <Image
+            src="/ico.png"
+            alt="Javier Mora"
+            width={32}
+            height={32}
+            className="rounded-[6px] shrink-0"
+            priority
+          />
+          {!collapsed && (
+            <div className="min-w-0 overflow-hidden">
               <p className="text-white text-[13px] font-semibold leading-[1.2] truncate">Javier Mora</p>
-              <p className="text-white/40 text-[11px] leading-[1.4] truncate">Product Designer</p>
+              <p className="text-white/40 text-[11px] leading-[1.4] truncate">Senior Product Designer</p>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Divider */}
-        <div className="mx-5 h-px bg-white/[0.06]" />
+        <div className="mx-3 h-px bg-white/[0.06]" />
 
-        {/* Nav — 8px top padding, 20px horizontal */}
-        <nav className="flex-1 px-3 pt-3 overflow-y-auto">
+        {/* Nav */}
+        <nav className="flex-1 px-1.5 pt-2" style={{ overflow: "visible" }}>
           <ul className="space-y-0.5">
             {navItems.map((navItem) => {
               const isActive = active === navItem.id;
@@ -150,9 +159,10 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                   <button
                     onClick={() => navigate(navItem.id)}
                     className={`
-                      w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md
+                      relative group w-full flex items-center gap-2.5 rounded-md
                       text-[13px] font-medium text-left
                       transition-all duration-100
+                      ${collapsed ? "justify-center py-[9px] px-0" : "px-3 py-[7px]"}
                       ${isActive
                         ? "bg-white text-[#0A0A0A]"
                         : "text-white/50 hover:bg-white/[0.06] hover:text-white/90"
@@ -162,15 +172,28 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                     <span className={`flex-shrink-0 ${isActive ? "text-[#0A0A0A]" : "text-white/30"}`}>
                       {navItem.icon}
                     </span>
-                    <span className="truncate">{label}</span>
-                    {navItem.id === "ai-design" && (
+
+                    {!collapsed && <span className="truncate">{label}</span>}
+
+                    {!collapsed && navItem.id === "ai-design" && (
                       <span className={`ml-auto shrink-0 text-[10px] font-bold px-1.5 py-px rounded
-                        ${isActive
-                          ? "bg-[#0A0A0A]/10 text-[#0A0A0A]"
-                          : "bg-[#2563EB]/20 text-[#60A5FA]"
-                        }`}
+                        ${isActive ? "bg-[#0A0A0A]/10 text-[#0A0A0A]" : "bg-[#2563EB]/20 text-[#60A5FA]"}`}
                       >
                         NEW
+                      </span>
+                    )}
+
+                    {/* Tooltip — only when collapsed */}
+                    {collapsed && (
+                      <span className="
+                        pointer-events-none absolute left-[calc(100%+10px)] z-[999]
+                        bg-[#0A0A0A] text-white text-[12px] font-medium
+                        px-2.5 py-1.5 rounded-md border border-white/[0.1]
+                        whitespace-nowrap shadow-xl
+                        opacity-0 group-hover:opacity-100
+                        transition-opacity duration-150
+                      ">
+                        {label}
                       </span>
                     )}
                   </button>
@@ -180,21 +203,38 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           </ul>
         </nav>
 
-        {/* Bottom section */}
-        <div className="px-3 pb-4 pt-3 space-y-1">
-          {/* Divider */}
-          <div className="mx-2 mb-3 h-px bg-white/[0.06]" />
+        {/* Bottom controls */}
+        <div className="pb-3 pt-2 px-1.5 space-y-0.5">
+          <div className="mx-2 mb-2 h-px bg-white/[0.06]" />
 
-          {/* Lang toggle */}
+          {/* Lang toggle — hidden when collapsed */}
+          {!collapsed && (
+            <button
+              onClick={toggleLang}
+              className="w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13px] text-white/40 hover:bg-white/[0.06] hover:text-white/70 transition-colors"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
+                <circle cx="7" cy="7" r="5.25" stroke="currentColor" strokeWidth="1.1"/>
+                <path d="M7 1.75c-1.75 1.5-1.75 7 0 10.5M7 1.75c1.75 1.5 1.75 7 0 10.5M1.75 7h10.5" stroke="currentColor" strokeWidth="1.1"/>
+              </svg>
+              <span>{lang === "en" ? "Español" : "English"}</span>
+            </button>
+          )}
+
+          {/* Collapse toggle */}
           <button
-            onClick={toggleLang}
-            className="w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13px] text-white/40 hover:bg-white/[0.06] hover:text-white/70 transition-colors"
+            onClick={onToggleCollapse}
+            className={`w-full flex items-center gap-2.5 rounded-md py-[7px]
+              text-[13px] text-white/40 hover:bg-white/[0.06] hover:text-white/70 transition-colors
+              ${collapsed ? "justify-center px-0" : "px-3"}`}
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
-              <circle cx="7" cy="7" r="5.25" stroke="currentColor" strokeWidth="1.1"/>
-              <path d="M7 1.75c-1.75 1.5-1.75 7 0 10.5M7 1.75c1.75 1.5 1.75 7 0 10.5M1.75 7h10.5" stroke="currentColor" strokeWidth="1.1"/>
+            <svg
+              width="14" height="14" viewBox="0 0 14 14" fill="none"
+              className={`shrink-0 transition-transform duration-300 ${collapsed ? "rotate-180" : ""}`}
+            >
+              <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span>{lang === "en" ? "Español" : "English"}</span>
+            {!collapsed && <span>{lang === "en" ? "Collapse" : "Colapsar"}</span>}
           </button>
         </div>
       </aside>
