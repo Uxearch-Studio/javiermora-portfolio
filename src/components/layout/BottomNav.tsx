@@ -81,7 +81,7 @@ export default function BottomNav() {
   const { lang } = useLang();
 
   return (
-    <nav className="sticky bottom-0 z-50 h-[62px] bg-[#050505] border-t border-white/[0.08]">
+    <nav className="shrink-0 h-[62px] bg-[#050505] border-t border-white/[0.08]">
       <div className="h-full max-w-[1400px] mx-auto px-5 md:px-[60px] flex items-center justify-center">
       <div className="flex items-stretch h-[42px] border border-white/[0.18] rounded-[3px] overflow-hidden w-full md:w-auto">
         {navItems.map((item, i) => {
