@@ -1,0 +1,408 @@
+/* ─────────────────────────────────────────────────────────
+   Catálogo de proyectos — fuente única para Home y Work.
+   Para agregar un proyecto: copiar una entrada y llenar.
+   REGLA: las métricas deben ser reales y verificables.
+   Facetas: industries (varias), engagement (una), year (número para filtro).
+───────────────────────────────────────────────────────── */
+
+export type Metric = { v: string; en: string; es: string };
+
+export type Work = {
+  slug: string;
+  name: string;
+  year: number;          // año principal (para ordenar/filtrar)
+  yearLabel: string;     // como se muestra: "2024–25"
+  type: { en: string; es: string };       // tipo de trabajo (badge de la card)
+  industries: string[];  // claves de INDUSTRIES (una o varias)
+  engagement: "fulltime" | "freelance" | "agency";
+  color: string;
+  en: string;
+  es: string;
+  metrics: Metric[];     // strip de 3 datos de valor
+  featured?: boolean;    // aparece en Home · Latest Work
+  live?: string | null;
+  // detalle expandible (modal): problema + resultado reales
+  caseStudy?: {
+    problemEn: string; problemEs: string;
+    resultEn: string; resultEs: string;
+    tags: string[];
+  };
+};
+
+export const INDUSTRIES: Record<string, { en: string; es: string }> = {
+  saas: { en: "SaaS", es: "SaaS" },
+  pos: { en: "POS & Retail", es: "POS y Retail" },
+  blockchain: { en: "Blockchain / Web3", es: "Blockchain / Web3" },
+  "design-systems": { en: "Design Systems", es: "Design Systems" },
+  apps: { en: "Applications", es: "Aplicaciones" },
+  ai: { en: "AI", es: "IA" },
+  landing: { en: "Landing Pages", es: "Landing Pages" },
+  ecommerce: { en: "Ecommerce", es: "Ecommerce" },
+};
+
+export const ENGAGEMENTS: Record<Work["engagement"], { en: string; es: string }> = {
+  fulltime: { en: "Full-time", es: "Tiempo completo" },
+  freelance: { en: "Freelance", es: "Freelance" },
+  agency: { en: "Agency", es: "Agencia" },
+};
+
+export const WORK: Work[] = [
+  {
+    slug: "kolo",
+    name: "KOLO Manager App",
+    year: 2026,
+    yearLabel: "2025 → Now",
+    type: { en: "SaaS · ERP", es: "SaaS · ERP" },
+    industries: ["saas", "pos", "ai"],
+    engagement: "fulltime",
+    color: "#059669",
+    en: "POS + inventory + FEL for SMEs running on WhatsApp and Excel.",
+    es: "POS + inventario + FEL para pymes que operaban en WhatsApp y Excel.",
+    metrics: [
+      { v: "40+", en: "merchants in beta", es: "comercios en beta" },
+      { v: "3", en: "countries (GT·SV·HN)", es: "países (GT·SV·HN)" },
+      { v: "0→1", en: "design system", es: "design system" },
+    ],
+    featured: true,
+    live: null,
+    caseStudy: {
+      problemEn:
+        "SMEs in Guatemala, El Salvador, and Honduras were running their businesses on WhatsApp and Excel. They needed a POS + inventory + billing tool that worked offline, in Spanish, and on a $15 phone.",
+      problemEs:
+        "Las PyMEs de Guatemala, El Salvador y Honduras llevaban su negocio por WhatsApp y Excel. Necesitaban una herramienta de POS + inventario + facturación que funcionara sin internet, en español y en un celular de $15.",
+      resultEn: "Currently in beta with 40+ merchants. I own research, the design system, and frontend PRs.",
+      resultEs: "Actualmente en beta con 40+ comercios. Soy responsable del research, el design system y PRs de frontend.",
+      tags: ["SaaS", "ERP", "POS", "FEL", "Mobile First"],
+    },
+  },
+  {
+    slug: "tactica",
+    name: "Tactica",
+    year: 2026,
+    yearLabel: "2026",
+    type: { en: "Mobile App", es: "App Móvil" },
+    industries: ["apps", "ai"],
+    engagement: "freelance",
+    color: "#7C3AED",
+    en: "Sports booking replacing broken manual process costing owners every weekend.",
+    es: "Reservas deportivas que reemplazó el caos manual que costaba ingresos cada fin de semana.",
+    metrics: [
+      { v: "−64%", en: "no-shows in 3 months", es: "no-shows en 3 meses" },
+      { v: "90s", en: "checkout (was 8 min)", es: "checkout (antes 8 min)" },
+      { v: "iOS+A", en: "React Native app", es: "app React Native" },
+    ],
+    featured: true,
+    live: "https://tactica-deploy.vercel.app",
+    caseStudy: {
+      problemEn:
+        "Sports facility owners in Bogotá were losing revenue to no-shows and double bookings. Existing tools were desktop-only, slow, and built for admins — not players.",
+      problemEs:
+        "Los dueños de canchas deportivas en Bogotá perdían ingresos por no-shows y dobles reservas. Las herramientas existentes eran solo desktop, lentas y construidas para admins — no para jugadores.",
+      resultEn: "Checkout time: 8 min → 90 sec. No-show rate: −64% after 3 months.",
+      resultEs: "Tiempo de checkout: 8 min → 90 seg. Tasa de no-show: −64% en 3 meses.",
+      tags: ["React Native", "Firebase", "Wompi", "Push Notifications"],
+    },
+  },
+  {
+    slug: "tweet",
+    name: "Tweet",
+    year: 2025,
+    yearLabel: "2025",
+    type: { en: "Social · Mobile", es: "Social · Móvil" },
+    industries: ["blockchain", "apps"],
+    engagement: "freelance",
+    color: "#1D9BF0",
+    en: "Social crypto MVP built from scratch for a Dutch startup.",
+    es: "MVP crypto social construido desde cero para una startup neerlandesa.",
+    metrics: [
+      { v: "0→1", en: "MVP from scratch", es: "MVP desde cero" },
+      { v: "4 mo", en: "idea to shipped", es: "de idea a entregado" },
+      { v: "NL", en: "remote client", es: "cliente remoto" },
+    ],
+    featured: true,
+    live: null,
+  },
+  {
+    slug: "gemini-ds",
+    name: "Bard / Gemini DS — HUGE",
+    year: 2024,
+    yearLabel: "2023–25",
+    type: { en: "Design System", es: "Design System" },
+    industries: ["design-systems", "ai"],
+    engagement: "fulltime",
+    color: "#EC4899",
+    en: "Components and design libraries alongside Google designers, at agency scale.",
+    es: "Componentes y bibliotecas de diseño junto al equipo de Google, a escala de agencia.",
+    metrics: [
+      { v: "16 mo", en: "with Google team", es: "con el equipo de Google" },
+      { v: "Bard→", en: "Gemini rebrand", es: "rebrand a Gemini" },
+      { v: "NYC", en: "HUGE Inc.", es: "HUGE Inc." },
+    ],
+    live: null,
+  },
+  {
+    slug: "ai-sf",
+    name: "AI Startup — SF",
+    year: 2025,
+    yearLabel: "2025",
+    type: { en: "AI · SaaS", es: "IA · SaaS" },
+    industries: ["ai", "saas"],
+    engagement: "freelance",
+    color: "#2563EB",
+    en: "AI-powered product MVP designed and built from zero for a San Francisco startup.",
+    es: "MVP de producto con IA diseñado y construido desde cero para una startup de San Francisco.",
+    metrics: [
+      { v: "0→1", en: "design + code", es: "diseño + código" },
+      { v: "2 mo", en: "to working MVP", es: "hasta MVP funcional" },
+      { v: "SF", en: "remote client", es: "cliente remoto" },
+    ],
+    live: null,
+  },
+  {
+    slug: "defi",
+    name: "DeFi Platform",
+    year: 2023,
+    yearLabel: "2023",
+    type: { en: "Web3 · Product", es: "Web3 · Producto" },
+    industries: ["blockchain"],
+    engagement: "freelance",
+    color: "#D97706",
+    en: "Staking flow redesign for a protocol with high TVL but broken retention.",
+    es: "Rediseño del flujo de staking para un protocolo con alto TVL pero mala retención.",
+    metrics: [
+      { v: "+3x", en: "session length", es: "duración de sesión" },
+      { v: "1", en: "staking flow rebuilt", es: "flujo de staking rehecho" },
+      { v: "DeFi", en: "dashboard + governance", es: "dashboard + governance" },
+    ],
+    live: null,
+    caseStudy: {
+      problemEn:
+        "A DeFi protocol had high TVL but terrible retention — users deposited once, couldn't understand their position, and left. The data was there, the design wasn't.",
+      problemEs:
+        "Un protocolo DeFi tenía alto TVL pero pésima retención — los usuarios depositaban una vez, no entendían su posición y se iban. Los datos estaban, el diseño no.",
+      resultEn: "Staking flow redesigned. Session length +3x. Full case study pending.",
+      resultEs: "Flujo de staking rediseñado. Duración de sesión +3x. Caso completo pendiente.",
+      tags: ["Web3", "DeFi", "Dashboard", "Staking", "Governance"],
+    },
+  },
+  {
+    slug: "chameleon",
+    name: "Chameleon Wallet",
+    year: 2024,
+    yearLabel: "2024",
+    type: { en: "Crypto Wallet", es: "Billetera Crypto" },
+    industries: ["blockchain", "apps"],
+    engagement: "freelance",
+    color: "#0F766E",
+    en: "Full redesign of a crypto wallet for a UK client. Fast turnaround, high fidelity.",
+    es: "Rediseño completo de una billetera crypto para un cliente de UK. Entrega rápida, alta fidelidad.",
+    metrics: [
+      { v: "1 mo", en: "full redesign", es: "rediseño completo" },
+      { v: "UK", en: "remote client", es: "cliente remoto" },
+      { v: "100%", en: "UI coverage", es: "cobertura de UI" },
+    ],
+    live: null,
+  },
+  {
+    slug: "props",
+    name: "Props Platform",
+    year: 2024,
+    yearLabel: "2024",
+    type: { en: "Web3 · Betting", es: "Web3 · Apuestas" },
+    industries: ["blockchain"],
+    engagement: "freelance",
+    color: "#15803D",
+    en: "Blockchain sports betting MVP — design and frontend for a Singapore startup.",
+    es: "MVP de apuestas deportivas blockchain — diseño y frontend para startup de Singapur.",
+    metrics: [
+      { v: "0→1", en: "MVP shipped", es: "MVP entregado" },
+      { v: "1 mo", en: "design + frontend", es: "diseño + frontend" },
+      { v: "SG", en: "remote client", es: "cliente remoto" },
+    ],
+    live: null,
+  },
+  {
+    slug: "point",
+    name: "Point Network",
+    year: 2022,
+    yearLabel: "2022",
+    type: { en: "Web3 Browser", es: "Navegador Web3" },
+    industries: ["blockchain", "apps"],
+    engagement: "fulltime",
+    color: "#111827",
+    en: "Web3 browser — wallet, dApp navigation and decentralized identity in one product.",
+    es: "Navegador Web3 — billetera, navegación dApp e identidad descentralizada en un producto.",
+    metrics: [
+      { v: "3-in-1", en: "wallet · dApps · ID", es: "wallet · dApps · ID" },
+      { v: "4 mo", en: "MVP shipped", es: "MVP entregado" },
+      { v: "Solana", en: "ecosystem", es: "ecosistema" },
+    ],
+    live: null,
+  },
+  {
+    slug: "algoexplorer",
+    name: "AlgoExplorer",
+    year: 2020,
+    yearLabel: "2020–21",
+    type: { en: "Block Explorer", es: "Explorador de Bloques" },
+    industries: ["blockchain"],
+    engagement: "fulltime",
+    color: "#1D4ED8",
+    en: "Block explorer for the Algorand ecosystem — dense on-chain data made readable. Built at Randlabs.",
+    es: "Explorador de bloques para el ecosistema Algorand — datos on-chain densos hechos legibles. Construido en Randlabs.",
+    metrics: [
+      { v: "0→1", en: "product design", es: "diseño del producto" },
+      { v: "Algo", en: "Algorand ecosystem", es: "ecosistema Algorand" },
+      { v: "24/7", en: "live chain data UI", es: "UI de datos en vivo" },
+    ],
+    live: null,
+  },
+  {
+    slug: "myalgo",
+    name: "My Algo Wallet",
+    year: 2021,
+    yearLabel: "2021–22",
+    type: { en: "Crypto Wallet", es: "Billetera Crypto" },
+    industries: ["blockchain", "apps"],
+    engagement: "fulltime",
+    color: "#0EA5E9",
+    en: "Web wallet for Algorand — send, receive and manage assets without leaving the browser. Built at Randlabs.",
+    es: "Billetera web para Algorand — enviar, recibir y gestionar activos sin salir del navegador. Construida en Randlabs.",
+    metrics: [
+      { v: "0→1", en: "wallet design", es: "diseño de la wallet" },
+      { v: "Web", en: "non-custodial UX", es: "UX no-custodial" },
+      { v: "Algo", en: "Algorand ecosystem", es: "ecosistema Algorand" },
+    ],
+    live: null,
+  },
+  {
+    slug: "draftea",
+    name: "Draftea",
+    year: 2023,
+    yearLabel: "2023",
+    type: { en: "Mobile App", es: "App Móvil" },
+    industries: ["apps"],
+    engagement: "fulltime",
+    color: "#E11D48",
+    en: "Freelance product design engagement. Case study coming soon.",
+    es: "Proyecto freelance de diseño de producto. Caso de estudio próximamente.",
+    metrics: [],
+    live: null,
+  },
+  {
+    slug: "exomecha",
+    name: "Exomecha",
+    year: 2022,
+    yearLabel: "2022",
+    type: { en: "Product Design", es: "Diseño de Producto" },
+    industries: ["apps"],
+    engagement: "freelance",
+    color: "#EF4444",
+    en: "Freelance product design engagement. Case study coming soon.",
+    es: "Proyecto freelance de diseño de producto. Caso de estudio próximamente.",
+    metrics: [],
+    live: null,
+  },
+  {
+    slug: "nebula",
+    name: "Nebula",
+    year: 2022,
+    yearLabel: "2022",
+    type: { en: "Product Design", es: "Diseño de Producto" },
+    industries: ["apps"],
+    engagement: "freelance",
+    color: "#8B5CF6",
+    en: "Freelance product design engagement. Case study coming soon.",
+    es: "Proyecto freelance de diseño de producto. Caso de estudio próximamente.",
+    metrics: [],
+    live: null,
+  },
+  {
+    slug: "stridesoles",
+    name: "Stridesoles",
+    year: 2023,
+    yearLabel: "2023",
+    type: { en: "Brand · Web", es: "Marca · Web" },
+    industries: ["apps"],
+    engagement: "freelance",
+    color: "#F59E0B",
+    en: "Freelance design engagement. Case study coming soon.",
+    es: "Proyecto freelance de diseño. Caso de estudio próximamente.",
+    metrics: [],
+    live: null,
+  },
+  {
+    slug: "ibarraceramica",
+    name: "Ibarra Cerámica",
+    year: 2023,
+    yearLabel: "2023",
+    type: { en: "Brand · Web", es: "Marca · Web" },
+    industries: ["apps"],
+    engagement: "freelance",
+    color: "#B45309",
+    en: "Freelance design engagement. Case study coming soon.",
+    es: "Proyecto freelance de diseño. Caso de estudio próximamente.",
+    metrics: [],
+    live: null,
+  },
+  {
+    slug: "ssa-launch",
+    name: "SSA Launch",
+    year: 2023,
+    yearLabel: "2023",
+    type: { en: "Landing Page", es: "Landing Page" },
+    industries: ["landing"],
+    engagement: "freelance",
+    color: "#0891B2",
+    en: "Landing page designed and shipped as a freelancer.",
+    es: "Landing page diseñada y entregada como freelancer.",
+    metrics: [],
+    live: null,
+  },
+  {
+    slug: "josue",
+    name: "Josue",
+    year: 2023,
+    yearLabel: "2023",
+    type: { en: "Landing Page", es: "Landing Page" },
+    industries: ["landing"],
+    engagement: "freelance",
+    color: "#4B5563",
+    en: "Landing page designed and shipped as a freelancer.",
+    es: "Landing page diseñada y entregada como freelancer.",
+    metrics: [],
+    live: null,
+  },
+  {
+    slug: "bemovil",
+    name: "BeMovil",
+    year: 2019,
+    yearLabel: "2019",
+    type: { en: "Mobile App", es: "App Móvil" },
+    industries: ["apps"],
+    engagement: "freelance",
+    color: "#6366F1",
+    en: "Freelance product design engagement. Case study coming soon.",
+    es: "Proyecto freelance de diseño de producto. Caso de estudio próximamente.",
+    metrics: [],
+    live: null,
+  },
+  {
+    slug: "cousine",
+    name: "Cousine POS",
+    year: 2019,
+    yearLabel: "2018–20",
+    type: { en: "POS · Restaurants", es: "POS · Restaurantes" },
+    industries: ["pos", "saas"],
+    engagement: "fulltime",
+    color: "#EA580C",
+    en: "POS system for restaurants. Remote + 16 months on-site in Cairo.",
+    es: "Sistema POS para restaurantes. Remoto + 16 meses en sitio en El Cairo.",
+    metrics: [
+      { v: "2 yrs", en: "first full-time UX", es: "primer UX full-time" },
+      { v: "16 mo", en: "on-site in Cairo", es: "en sitio en El Cairo" },
+      { v: "POS", en: "restaurant ops", es: "operación restaurantes" },
+    ],
+    live: null,
+  },
+];

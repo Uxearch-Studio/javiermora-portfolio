@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNav } from "@/context/NavContext";
 import { useLang } from "@/context/LangContext";
+import WorkCard from "@/components/cards/WorkCard";
+import { WORK } from "@/data/work";
 
 const stagger = {
   hidden: {},
@@ -971,26 +973,8 @@ function SkillOverlay({
 /* ─────────────────────────────────────────────────────────
    Projects
 ───────────────────────────────────────────────────────── */
-const projects = [
-  {
-    name: "KOLO", year: "2024–25", type: "SaaS · ERP", color: "#059669",
-    metric: "40+ merchants",
-    en: "POS + inventory + FEL for SMEs running on WhatsApp and Excel.",
-    es: "POS + inventario + FEL para pymes que operaban en WhatsApp y Excel.",
-  },
-  {
-    name: "Tactica", year: "2025", type: "Mobile App", color: "#7C3AED",
-    metric: "−64% no-shows",
-    en: "Sports booking replacing broken manual process costing owners every weekend.",
-    es: "Reservas deportivas que reemplazó el caos manual que costaba ingresos cada fin de semana.",
-  },
-  {
-    name: "Tweet", year: "2024", type: "Social · Mobile", color: "#1D9BF0",
-    metric: "Coming soon",
-    en: "Case study coming soon.",
-    es: "Caso de estudio próximamente.",
-  },
-];
+// Latest Work usa el catálogo compartido: src/data/work.ts (featured)
+const projects = WORK.filter((w) => w.featured);
 
 /* ─────────────────────────────────────────────────────────
    Open Signal — broadcasting pill + popover
@@ -1378,8 +1362,8 @@ export default function HomeView() {
                 </p>
                 <p className="text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.40)" }}>
                   {lang === "en"
-                    ? "16y · 6 disciplines — darker = deeper focus"
-                    : "16 años · 6 disciplinas — más oscuro = mayor enfoque"}
+                    ? "7y · 6 disciplines — darker = deeper focus"
+                    : "7 años · 6 disciplinas — más oscuro = mayor enfoque"}
                 </p>
               </div>
               <div className="flex items-center gap-2 shrink-0 ml-4 mt-0.5">
@@ -1417,68 +1401,13 @@ export default function HomeView() {
           <motion.div variants={rowStagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-1 gap-3 lg:flex-1 lg:min-h-0">
 
           {projects.map((p) => (
-            <motion.button variants={popUp} key={p.name} onClick={() => setActive("cases")}
-              className="group text-left bg-white border border-[#E4E4E7] rounded-xl overflow-hidden hover:border-[#0A0A0A] hover:shadow-md transition-all duration-200 flex flex-col md:h-full cursor-pointer">
-              {/* Image area — fixed height mobile, 40% flex on desktop */}
-              <div className="relative h-[170px] w-full overflow-hidden shrink-0"
-                style={{ background: `linear-gradient(145deg, ${p.color}28 0%, ${p.color}10 100%)` }}>
-                {/* Abstract UI mockup shapes */}
-                <div className="absolute inset-0 p-4 flex flex-col gap-2 justify-center">
-                  <div className="h-2 rounded-full w-3/4 opacity-20" style={{ background: p.color }} />
-                  <div className="h-1.5 rounded-full w-1/2 opacity-12" style={{ background: p.color }} />
-                  <div className="flex gap-1.5 mt-1">
-                    <div className="h-6 rounded w-1/3 opacity-15" style={{ background: p.color }} />
-                    <div className="h-6 rounded w-1/4 opacity-10" style={{ background: p.color }} />
-                  </div>
-                  <div className="h-1 rounded-full w-2/3 opacity-08" style={{ background: p.color }} />
-                </div>
-                {/* Subtle grid */}
-                <div className="absolute inset-0 opacity-[0.03]"
-                  style={{
-                    backgroundImage: `repeating-linear-gradient(0deg, ${p.color} 0px, ${p.color} 1px, transparent 1px, transparent 24px),
-                                      repeating-linear-gradient(90deg, ${p.color} 0px, ${p.color} 1px, transparent 1px, transparent 24px)`,
-                  }} />
-                {/* Year + type badge */}
-                <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                  <span className="text-[9px] font-mono px-1.5 py-[2px] rounded"
-                    style={{ background: `${p.color}30`, color: p.color }}>
-                    {p.type}
-                  </span>
-                </div>
-                <span className="absolute top-3 right-3 text-[10px] font-mono px-1.5 py-[2px] rounded"
-                  style={{ background: `${p.color}25`, color: p.color }}>
-                  {p.year}
-                </span>
-                {/* Bottom fade into card */}
-                <div className="absolute inset-x-0 bottom-0 h-8"
-                  style={{ background: "linear-gradient(to top, white 0%, transparent 100%)" }} />
-              </div>
-
-              <div className="p-3 flex flex-col flex-1">
-                <p className="text-[#0A0A0A] font-semibold text-[14px] leading-tight group-hover:text-[#2563EB] transition-colors mb-1">
-                  {p.name}
-                </p>
-                <p className="text-[#52525B] text-[13px] leading-relaxed flex-1">
-                  {lang === "en" ? p.en : p.es}
-                </p>
-
-                {/* Metric badge */}
-                <span className="mt-1.5 self-start inline-flex items-center px-1.5 py-[3px] rounded text-[10px] font-semibold"
-                  style={{ backgroundColor: `${p.color}18`, color: p.color }}>
-                  {p.metric}
-                </span>
-
-                {/* CTA button */}
-                <div className="mt-2 flex items-center justify-between px-3 py-[10px] rounded-lg border border-[#0A0A0A] bg-[#0A0A0A] group-hover:border-[#2563EB] group-hover:bg-[#2563EB] transition-all duration-200">
-                  <span className="text-[12px] font-semibold text-white transition-colors duration-200">
-                    {lang === "en" ? "View Case Study" : "Ver Caso de Estudio"}
-                  </span>
-                  <span className="text-[14px] font-medium text-white/60 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-200 inline-block">
-                    →
-                  </span>
-                </div>
-              </div>
-            </motion.button>
+            <WorkCard
+              key={p.slug}
+              p={p}
+              lang={lang}
+              variants={popUp}
+              onClick={() => setActive("cases")}
+            />
           ))}
 
           {/* ── Learning Radar card — overflow-visible so labels float past SVG bounds ── */}
