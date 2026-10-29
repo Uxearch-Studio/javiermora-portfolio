@@ -32,8 +32,8 @@ const navItems: {
   },
   {
     id: "cases",
-    labelEn: "Cases",
-    labelEs: "Casos",
+    labelEn: "Work",
+    labelEs: "Proyectos",
     icon: (
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
         <rect x="1.5" y="4" width="12" height="9" rx="1" stroke="currentColor" strokeWidth="1.2"/>

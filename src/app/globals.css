@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --font-mono: var(--font-red-hat-mono), ui-monospace, monospace;
   --color-bg:        #FAFAFA;
   --color-surface:   #FFFFFF;
   --color-border:    #E4E4E7;
@@ -64,11 +65,6 @@
     color: #1D4ED8;
   }
 
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #FAFAFA; }
-  ::-webkit-scrollbar-thumb { background: #E4E4E7; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #A1A1AA; }
-
   :focus-visible { outline: 2px solid #2563EB; outline-offset: 2px; }
 }
 
@@ -102,4 +98,59 @@
   border: none;
   border-top: 1px solid #E4E4E7;
   margin: 32px 0;
+}
+
+/* Hide scrollbar while keeping scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* barra de progreso dentro de Prev/Next durante la caminata */
+.walk-progress {
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: currentColor;
+  opacity: 0.5;
+  transform-origin: left;
+  transform: scaleX(0);
+  animation-name: walk-progress-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes walk-progress-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* vinilos: giro al hover, respetando reduced-motion */
+.vinyl { transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1); }
+.group:hover .vinyl { animation: vinyl-spin 1.8s linear infinite; }
+@keyframes vinyl-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .vinyl { animation: none; }
+}
+
+/* vinilo sonando: giro continuo */
+.vinyl-playing { animation: vinyl-spin 1.8s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .vinyl-playing { animation: none; }
+}
+
+/* barras de ecualizador junto a "Now playing" */
+.eq-bar {
+  width: 2.5px;
+  height: 10px;
+  border-radius: 1px;
+  transform-origin: bottom;
+  animation: eq-bounce 0.9s ease-in-out infinite;
+}
+.eq-bar-2 { animation-delay: 0.2s; }
+.eq-bar-3 { animation-delay: 0.45s; }
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.35); }
+  50%      { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eq-bar { animation: none; transform: scaleY(0.7); }
 }

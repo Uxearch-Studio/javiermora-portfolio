@@ -31,8 +31,8 @@ const navItems: { id: Section; labelEn: string; labelEs: string; icon: React.Rea
   },
   {
     id: "cases",
-    labelEn: "Cases",
-    labelEs: "Casos",
+    labelEn: "Work",
+    labelEs: "Proyectos",
     icon: (
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
         <rect x="1.5" y="4" width="12" height="9" rx="1" stroke="currentColor" strokeWidth="1.2"/>
@@ -122,8 +122,8 @@ export default function Sidebar({ mobileOpen, onClose, collapsed, onToggleCollap
           fixed top-0 left-0 h-full z-40 flex flex-col shrink-0
           bg-[#141D2C] border-r border-white/[0.06]
           transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
-          lg:relative lg:top-auto lg:left-auto lg:z-[50] lg:self-stretch
-          ${collapsed ? "w-[52px]" : "w-[240px]"}
+          lg:sticky lg:left-auto lg:z-[50] lg:self-start lg:h-dvh
+          ${collapsed ? "w-[52px]" : "w-[200px]"}
           ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
         style={{ overflow: "visible" }}
@@ -143,16 +143,16 @@ export default function Sidebar({ mobileOpen, onClose, collapsed, onToggleCollap
             </button>
           </div>
         ) : (
-          <div className="flex items-center gap-3 px-4 pt-5 pb-4">
-            <Image src="/ico.png" alt="Javier Mora" width={32} height={32} className="rounded-[6px] shrink-0" priority />
+          <div className="flex items-center gap-1.5 px-3 pt-5 pb-4">
+            <Image src="/ico.png" alt="Javier Mora" width={28} height={28} className="rounded-[6px] shrink-0" priority />
             <div className="min-w-0 flex-1 overflow-hidden">
               <p className="text-white text-[13px] font-semibold leading-[1.2] truncate">Javier Mora</p>
-              <p className="text-white/40 text-[11px] leading-[1.4] truncate">Senior Product Designer</p>
+              <p className="text-white/40 text-[10px] leading-[1.4] truncate">Senior Product Designer</p>
             </div>
             {/* Collapse button */}
             <button
               onClick={onToggleCollapse}
-              className="shrink-0 w-7 h-7 flex items-center justify-center rounded-md text-white/30 hover:bg-white/[0.06] hover:text-white/70 transition-colors"
+              className="shrink-0 w-6 h-6 flex items-center justify-center rounded-md text-white/30 hover:bg-white/[0.06] hover:text-white/70 transition-colors"
             >
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                 <path d="M8.5 2L4 6.5l4.5 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
@@ -175,9 +175,9 @@ export default function Sidebar({ mobileOpen, onClose, collapsed, onToggleCollap
                   <button
                     onClick={() => navigate(navItem.id)}
                     className={`
-                      relative group w-full flex items-center gap-2.5 rounded-md
+                      relative group w-full flex items-center gap-2 rounded-md
                       text-[13px] font-medium text-left transition-all duration-100
-                      ${collapsed ? "justify-center py-[9px] px-0" : "px-3 py-[7px]"}
+                      ${collapsed ? "justify-center py-[9px] px-0" : "px-2.5 py-[7px]"}
                       ${isActive
                         ? "bg-white text-[#0A0A0A]"
                         : "text-white/50 hover:bg-white/[0.06] hover:text-white/90"
@@ -189,7 +189,7 @@ export default function Sidebar({ mobileOpen, onClose, collapsed, onToggleCollap
                     </span>
                     {!collapsed && <span className="truncate">{label}</span>}
                     {!collapsed && navItem.id === "ai-design" && (
-                      <span className={`ml-auto shrink-0 text-[10px] font-bold px-1.5 py-px rounded
+                      <span className={`ml-auto shrink-0 text-[10px] font-bold px-1 py-px rounded
                         ${isActive ? "bg-[#0A0A0A]/10 text-[#0A0A0A]" : "bg-[#2563EB]/20 text-[#60A5FA]"}`}>
                         NEW
                       </span>

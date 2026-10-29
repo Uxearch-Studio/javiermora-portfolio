@@ -7,7 +7,7 @@ import { useLang } from "@/context/LangContext";
 const sectionNames: Record<string, { en: string; es: string }> = {
   home:        { en: "Home",             es: "Inicio" },
   process:     { en: "Design Process",   es: "Proceso" },
-  cases:       { en: "Cases",            es: "Casos" },
+  cases:       { en: "Work",             es: "Proyectos" },
   about:       { en: "About Me",         es: "Sobre Mí" },
   experience:  { en: "Experience",       es: "Experiencia" },
   "ai-design": { en: "AI Native Design", es: "AI Native" },

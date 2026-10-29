@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { useNav } from "@/context/NavContext";
 import HomeView from "@/components/views/HomeView";
@@ -24,19 +24,22 @@ function ActiveView() {
     contact:    <ContactView />,
   };
 
+  // Sin AnimatePresence: el modo "wait" dejaba vistas en blanco o copias
+  // congeladas (Framer deja de animar el árbol "exiting") cuando la
+  // transición se interrumpía. El key remonta la vista nueva con fade-in;
+  // la anterior se desmonta al instante — sin estados intermedios rotos.
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={active}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -6 }}
-        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-        className="relative lg:h-full"
-      >
-        {views[active]}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      key={active}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
+      // Home fue diseñado para caber exacto en el viewport (100dvh − 96px de
+      // padding del content-area); las demás vistas fluyen con el documento.
+      className={`relative ${active === "home" ? "lg:h-[calc(100dvh-96px)]" : ""}`}
+    >
+      {views[active]}
+    </motion.div>
   );
 }
 

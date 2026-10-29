@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Red_Hat_Display } from "next/font/google";
+import { Red_Hat_Display, Red_Hat_Mono } from "next/font/google";
 import "./globals.css";
 import { LangProvider } from "@/context/LangContext";
 import { NavProvider } from "@/context/NavContext";
@@ -9,6 +9,11 @@ const redHatDisplay = Red_Hat_Display({
   weight: ["400", "500", "600", "700"],
   variable: "--font-red-hat",
   display: "swap",
+});
+
+const redHatMono = Red_Hat_Mono({
+  subsets: ["latin"],
+  variable: "--font-red-hat-mono",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +37,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${redHatDisplay.variable} font-[family-name:var(--font-red-hat)]`}>
+      <body className={`${redHatDisplay.variable} ${redHatMono.variable} font-[family-name:var(--font-red-hat)]`}>
         <LangProvider>
           <NavProvider>
             {children}

@@ -12,8 +12,45 @@ interface Role {
   id: RoleKey;
   labelEn: string;
   labelEs: string;
-  icon: string;
+  icon: React.ReactNode;
 }
+
+/* iconos de trazo 1.5 — cero emojis, regla del sitio */
+const RI = {
+  briefcase: (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+      <rect x="1.5" y="4" width="11" height="8" rx="1.5" />
+      <path d="M5 4V3a1 1 0 011-1h2a1 1 0 011 1v1M1.5 7.5h11" />
+    </svg>
+  ),
+  rocket: (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 9.5c3.5-2 5-4.5 5-7.5-3 0-5.5 1.5-7.5 5L7 9.5z" />
+      <path d="M4.5 7L2 8l2 .5L4.5 11l1-2.5M9.5 5.2a.8.8 0 100-1.6.8.8 0 000 1.6z" />
+    </svg>
+  ),
+  bolt: (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+      <path d="M7.5 1.5L3 8h3l-.5 4.5L10 6H7l.5-4.5z" />
+    </svg>
+  ),
+  search: (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+      <circle cx="6" cy="6" r="4.5" />
+      <path d="M9.5 9.5L13 13" />
+    </svg>
+  ),
+  pen: (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 1.8l2.2 2.2L5 11.2l-3 .8.8-3L10 1.8z" />
+    </svg>
+  ),
+  chat: (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+      <path d="M12.5 7A5.5 5.5 0 112 10.5L1.5 12.5l2-0.5A5.5 5.5 0 0012.5 7z" />
+    </svg>
+  ),
+};
 
 interface Purpose {
   id: PurposeKey;
@@ -26,12 +63,12 @@ interface Purpose {
 }
 
 const ROLES: Role[] = [
-  { id: "hiring-manager", labelEn: "Hiring Manager",  labelEs: "Hiring Manager",  icon: "💼" },
-  { id: "founder",        labelEn: "Founder",          labelEs: "Founder",          icon: "🚀" },
-  { id: "entrepreneur",   labelEn: "Entrepreneur",     labelEs: "Emprendedor",      icon: "⚡" },
-  { id: "recruiter",      labelEn: "Recruiter",        labelEs: "Reclutador",       icon: "🔍" },
-  { id: "designer",       labelEn: "Designer",         labelEs: "Diseñador",        icon: "✏️" },
-  { id: "other",          labelEn: "Other",            labelEs: "Otro",             icon: "👋" },
+  { id: "hiring-manager", labelEn: "Hiring Manager",  labelEs: "Hiring Manager",  icon: RI.briefcase },
+  { id: "founder",        labelEn: "Founder",          labelEs: "Founder",          icon: RI.rocket },
+  { id: "entrepreneur",   labelEn: "Entrepreneur",     labelEs: "Emprendedor",      icon: RI.bolt },
+  { id: "recruiter",      labelEn: "Recruiter",        labelEs: "Reclutador",       icon: RI.search },
+  { id: "designer",       labelEn: "Designer",         labelEs: "Diseñador",        icon: RI.pen },
+  { id: "other",          labelEn: "Other",            labelEs: "Otro",             icon: RI.chat },
 ];
 
 const PURPOSES: Purpose[] = [
@@ -197,13 +234,13 @@ export default function ContactView() {
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.05 }}
-          className="text-2xl sm:text-3xl font-semibold leading-[1.15] tracking-[-0.02em] text-[#0A0A0A] mb-2"
+          className="text-3xl sm:text-[40px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#0A0A0A] mb-4"
         >
           {lang === "en" ? "Let's make it personal." : "Hagámoslo personal."}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
-          className="text-[#3F3F46] text-[14px] leading-relaxed mb-7"
+          className="text-[#52525B] text-base leading-relaxed mb-8"
         >
           {lang === "en"
             ? "Tell me who you are and why you're reaching out — or just write your own message."
@@ -291,7 +328,7 @@ export default function ContactView() {
                 />
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#F4F4F5] flex items-center justify-center shrink-0 text-[14px]">
+                  <div className="w-8 h-8 rounded-full bg-[#F4F4F5] text-[#3F3F46] flex items-center justify-center shrink-0">
                     {selectedRole.icon}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -322,7 +359,7 @@ export default function ContactView() {
                     className="rounded-xl border border-[#E4E4E7] bg-white p-5 mb-4"
                   >
                     <p className="text-[13px] font-semibold text-[#0A0A0A] mb-1">
-                      {lang === "en" ? "Quick design check 🎨" : "Chequeo de diseño 🎨"}
+                      {lang === "en" ? "Quick design check" : "Chequeo de diseño"}
                     </p>
                     <p className="text-[12px] text-[#52525B] mb-4">
                       {lang === "en"
@@ -352,7 +389,7 @@ export default function ContactView() {
                     </div>
                     {wrongAnswer && (
                       <p className="text-[12px] text-[#DC2626] mt-3">
-                        {lang === "en" ? "Hmm, think like a designer 😉" : "Mmm, piensa como diseñador 😉"}
+                        {lang === "en" ? "Hmm — think like a designer." : "Mmm — piensa como diseñador."}
                       </p>
                     )}
                   </motion.div>
@@ -364,7 +401,7 @@ export default function ContactView() {
                 <motion.a
                   variants={fadeUp} initial="hidden" animate="show"
                   href={honeypot ? "#" : mailtoHref}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#1a1a1a] text-white text-[13px] font-semibold rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#2563EB] text-white text-[13px] font-semibold rounded-lg transition-colors"
                 >
                   <svg width="13" height="13" viewBox="0 0 15 15" fill="none">
                     <rect x="1.5" y="3.5" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="1.3"/>
@@ -457,7 +494,7 @@ export default function ContactView() {
                 <path d="M7.5 1C5.015 1 3 3.015 3 5.5c0 3.5 4.5 8.5 4.5 8.5S12 9 12 5.5C12 3.015 9.985 1 7.5 1z" stroke="currentColor" strokeWidth="1.2"/>
                 <circle cx="7.5" cy="5.5" r="1.5" stroke="currentColor" strokeWidth="1.2"/>
               </svg>
-              {lang === "en" ? "Bogotá, Colombia · Remote" : "Bogotá, Colombia · Remoto"}
+              {lang === "en" ? "Colombia · Remote" : "Colombia · Remoto"}
             </div>
             <div className="flex items-center gap-2 text-[12px] text-[#3F3F46]">
               <svg width="12" height="12" viewBox="0 0 15 15" fill="none" className="shrink-0">
