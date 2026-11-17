@@ -33,7 +33,7 @@ export default function WorkCard({
     >
       {/* Área de imagen — mockup abstracto con el color del proyecto */}
       <div
-        className="relative h-[170px] w-full overflow-hidden shrink-0"
+        className={`relative w-full overflow-hidden shrink-0 ${p.img ? "aspect-[43/17]" : "h-[170px]"}`}
         style={{ background: p.img ? "#0A0A0A" : `linear-gradient(145deg, ${p.color}28 0%, ${p.color}10 100%)` }}
       >
         {p.img ? (
