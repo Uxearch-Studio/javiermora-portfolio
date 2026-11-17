@@ -63,7 +63,7 @@ const DEMOS: Demo[] = [
     name: "Tactica",
     accent: "#7C3AED",
     status: { en: "In the app stores", es: "En las tiendas" },
-    url: "https://tactica-deploy.vercel.app",
+    url: "https://tactica.javiermora.co",
     desc: {
       en: "Sports booking for players and facility owners — designed and coded entirely with AI, from first screen to store release.",
       es: "Reservas deportivas para jugadores y dueños de canchas — diseñada y programada por completo con IA, de la primera pantalla al release en tiendas.",

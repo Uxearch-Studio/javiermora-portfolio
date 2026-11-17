@@ -115,8 +115,9 @@ export const WORK: Work[] = [
       { v: "iOS+A", en: "React Native app", es: "app React Native" },
     ],
     img: "/work/tactica.png",
+    caseUrl: "https://tactica.javiermora.co",
     featured: true,
-    live: "https://tactica-deploy.vercel.app",
+    live: "https://tactica.javiermora.co",
     caseStudy: {
       problemEn:
         "Sports facility owners in Bogotá were losing revenue to no-shows and double bookings. Existing tools were desktop-only, slow, and built for admins — not players.",

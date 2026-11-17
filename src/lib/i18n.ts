@@ -53,7 +53,7 @@ export const translations = {
           tags: ["React Native", "Firebase", "UX Research", "Design Systems"],
           color: "#7C3AED",
           year: "2025",
-          live: "https://tactica-deploy.vercel.app",
+          live: "https://tactica.javiermora.co",
         },
         {
           slug: "kolo",
@@ -277,7 +277,7 @@ export const translations = {
           tags: ["React Native", "Firebase", "UX Research", "Design Systems"],
           color: "#7C3AED",
           year: "2025",
-          live: "https://tactica-deploy.vercel.app",
+          live: "https://tactica.javiermora.co",
         },
         {
           slug: "kolo",
