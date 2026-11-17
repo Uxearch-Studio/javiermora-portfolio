@@ -50,6 +50,36 @@ export const ENGAGEMENTS: Record<Work["engagement"], { en: string; es: string }>
 
 export const WORK: Work[] = [
   {
+    slug: "kolo-platform",
+    name: "KOLO Platform",
+    year: 2026,
+    yearLabel: "2025 → Now",
+    type: { en: "Web · ERP", es: "Web · ERP" },
+    industries: ["saas", "pos", "ai", "design-systems"],
+    engagement: "fulltime",
+    color: "#059669",
+    en: "Desktop web ERP + POS for SMEs in GT·SV·HN — one ecosystem: platform, mobile apps and a 0→1 design system.",
+    es: "ERP + POS web de escritorio para pymes en GT·SV·HN — un ecosistema: plataforma, apps móviles y un design system 0→1.",
+    metrics: [
+      { v: "40+", en: "merchants in beta", es: "comercios en beta" },
+      { v: "3", en: "countries (GT·SV·HN)", es: "países (GT·SV·HN)" },
+      { v: "0→1", en: "design system", es: "design system" },
+    ],
+    featured: true,
+    live: null,
+    caseStudy: {
+      problemEn:
+        "SMEs in Guatemala, El Salvador, and Honduras were running their businesses on WhatsApp and Excel. They needed POS + inventory + electronic billing that worked in Spanish, across three tax regimes, on the hardware they already had.",
+      problemEs:
+        "Las pymes de Guatemala, El Salvador y Honduras llevaban su negocio por WhatsApp y Excel. Necesitaban POS + inventario + facturación electrónica en español, para tres regímenes fiscales, con el hardware que ya tenían.",
+      resultEn:
+        "In 12 months as the sole designer: desktop web ERP, POS, mobile apps and a 0→1 design system — in beta with 40+ merchants. I own research, the design system, and frontend PRs.",
+      resultEs:
+        "En 12 meses como único diseñador: ERP web de escritorio, POS, apps móviles y un design system 0→1 — en beta con 40+ comercios. Soy responsable del research, el design system y PRs de frontend.",
+      tags: ["SaaS", "ERP", "POS", "FEL", "Design System", "Web Desktop"],
+    },
+  },
+  {
     slug: "kolo-rutas",
     name: "KOLO Rutas",
     year: 2026,
@@ -74,28 +104,23 @@ export const WORK: Work[] = [
     slug: "kolo",
     name: "KOLO Manager App",
     year: 2026,
-    yearLabel: "2025 → Now",
-    type: { en: "SaaS · ERP", es: "SaaS · ERP" },
-    industries: ["saas", "pos", "ai"],
+    yearLabel: "2026",
+    type: { en: "Mobile · Management", es: "Móvil · Gestión" },
+    industries: ["saas", "pos", "apps"],
     engagement: "fulltime",
-    color: "#059669",
-    en: "POS + inventory + FEL for SMEs running on WhatsApp and Excel.",
-    es: "POS + inventario + FEL para pymes que operaban en WhatsApp y Excel.",
-    metrics: [
-      { v: "40+", en: "merchants in beta", es: "comercios en beta" },
-      { v: "3", en: "countries (GT·SV·HN)", es: "países (GT·SV·HN)" },
-      { v: "0→1", en: "design system", es: "design system" },
-    ],
-    featured: true,
+    color: "#10B981",
+    en: "The KOLO ecosystem in the owner's pocket — sales, inventory and billing from the phone.",
+    es: "El ecosistema KOLO en el bolsillo del dueño — ventas, inventario y facturación desde el celular.",
+    metrics: [],
     live: null,
     caseStudy: {
       problemEn:
-        "SMEs in Guatemala, El Salvador, and Honduras were running their businesses on WhatsApp and Excel. They needed a POS + inventory + billing tool that worked offline, in Spanish, and on a $15 phone.",
+        "KOLO merchants don't live behind a desk. Owners needed to check sales, stock and invoices from wherever they are — on the phones they already own.",
       problemEs:
-        "Las PyMEs de Guatemala, El Salvador y Honduras llevaban su negocio por WhatsApp y Excel. Necesitaban una herramienta de POS + inventario + facturación que funcionara sin internet, en español y en un celular de $15.",
-      resultEn: "Currently in beta with 40+ merchants. I own research, the design system, and frontend PRs.",
-      resultEs: "Actualmente en beta con 40+ comercios. Soy responsable del research, el design system y PRs de frontend.",
-      tags: ["SaaS", "ERP", "POS", "FEL", "Mobile First"],
+        "Los comercios de KOLO no viven detrás de un escritorio. Los dueños necesitaban ver ventas, inventario y facturas desde donde estén — en los celulares que ya tienen.",
+      resultEn: "Mobile companion to the KOLO Platform, sharing its design system end to end.",
+      resultEs: "App complementaria de KOLO Platform, compartiendo su design system de punta a punta.",
+      tags: ["SaaS", "POS", "Mobile First", "Design System"],
     },
   },
   {
