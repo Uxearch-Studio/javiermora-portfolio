@@ -33,16 +33,16 @@ export default function WorkCard({
     >
       {/* Área de imagen — mockup abstracto con el color del proyecto */}
       <div
-        className={`relative w-full overflow-hidden shrink-0 ${p.img ? "" : "h-[170px]"}`}
+        className="relative w-full overflow-hidden shrink-0 aspect-[630/305]"
         style={{ background: p.img ? "#0A0A0A" : `linear-gradient(145deg, ${p.color}28 0%, ${p.color}10 100%)` }}
       >
         {p.img ? (
-          /* imagen diseñada: la card adopta su proporción natural — nunca recorta */
+          /* imagen diseñada 630x305: misma proporción que el contenedor — nunca recorta */
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={p.img}
             alt={`${p.name} — preview`}
-            className="block w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]"
+            className="block w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           />
         ) : (
           <>
@@ -94,7 +94,7 @@ export default function WorkCard({
         <p className="text-[#0A0A0A] font-semibold text-[14px] leading-tight group-hover:text-[#2563EB] transition-colors mb-1">
           {p.name}
         </p>
-        <p className="text-[#52525B] text-[13px] leading-relaxed flex-1">
+        <p className="text-[#52525B] text-[13px] leading-relaxed line-clamp-2">
           {en ? p.en : p.es}
         </p>
 
@@ -118,6 +118,9 @@ export default function WorkCard({
             ))}
           </ul>
         )}
+
+        {/* el espacio sobrante queda bajo los bullets, no entre descripción y métricas */}
+        <div className="flex-1" />
 
         {/* CTA */}
         <div className="mt-2 flex items-center justify-between px-3 py-[10px] rounded-lg border border-[#0A0A0A] bg-[#0A0A0A] group-hover:border-[#2563EB] group-hover:bg-[#2563EB] transition-all duration-200">
