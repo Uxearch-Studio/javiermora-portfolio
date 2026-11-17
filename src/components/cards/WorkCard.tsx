@@ -33,16 +33,16 @@ export default function WorkCard({
     >
       {/* Área de imagen — mockup abstracto con el color del proyecto */}
       <div
-        className={`relative w-full overflow-hidden shrink-0 ${p.img ? "aspect-[43/17]" : "h-[170px]"}`}
+        className={`relative w-full overflow-hidden shrink-0 ${p.img ? "" : "h-[170px]"}`}
         style={{ background: p.img ? "#0A0A0A" : `linear-gradient(145deg, ${p.color}28 0%, ${p.color}10 100%)` }}
       >
         {p.img ? (
-          /* imagen diseñada 860x340 — recorte centrado en anchos angostos */
+          /* imagen diseñada: la card adopta su proporción natural — nunca recorta */
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={p.img}
             alt={`${p.name} — preview`}
-            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+            className="block w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]"
           />
         ) : (
           <>
