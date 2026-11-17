@@ -114,6 +114,7 @@ export const WORK: Work[] = [
       { v: "90s", en: "checkout (was 8 min)", es: "checkout (antes 8 min)" },
       { v: "iOS+A", en: "React Native app", es: "app React Native" },
     ],
+    img: "/work/tactica.png",
     featured: true,
     live: "https://tactica-deploy.vercel.app",
     caseStudy: {
