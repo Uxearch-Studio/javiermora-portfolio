@@ -98,18 +98,25 @@ export default function WorkCard({
           {en ? p.en : p.es}
         </p>
 
-        {/* Strip de 3 métricas de valor — solo si el proyecto tiene métricas reales */}
+        {/* Métricas como lista con bullets — una por línea, texto ≥12px, nunca se corta */}
         {p.metrics.length > 0 && (
-          <div className="mt-2 pt-2 border-t border-[#F4F4F5] grid grid-cols-3 gap-1.5">
+          <ul className="mt-2 pt-2 border-t border-[#F4F4F5] flex flex-col gap-[5px]">
             {p.metrics.slice(0, 3).map((m, i) => (
-              <div key={i} className="min-w-0">
-                <p className="text-[12px] font-bold tabular-nums leading-tight" style={{ color: p.color }}>
-                  {m.v}
+              <li key={i} className="flex items-start gap-2">
+                <span
+                  aria-hidden
+                  className="w-[5px] h-[5px] rounded-full shrink-0 mt-[6px]"
+                  style={{ background: p.color }}
+                />
+                <p className="text-[12px] text-[#52525B] leading-snug">
+                  <span className="text-[13px] font-bold tabular-nums" style={{ color: p.color }}>
+                    {m.v}
+                  </span>{" "}
+                  {en ? m.en : m.es}
                 </p>
-                <p className="text-[10px] text-[#52525B] leading-[1.3]">{en ? m.en : m.es}</p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
 
         {/* CTA */}
