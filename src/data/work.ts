@@ -19,6 +19,8 @@ export type Work = {
   en: string;
   es: string;
   metrics: Metric[];     // strip de 3 datos de valor
+  img?: string;          // imagen de card 860x340 (object-cover); sin ella, mockup generado
+  caseUrl?: string;      // case study externo: el CTA abre este link en vez del modal
   featured?: boolean;    // aparece en Home · Latest Work
   live?: string | null;
   // detalle expandible (modal): problema + resultado reales
@@ -47,6 +49,27 @@ export const ENGAGEMENTS: Record<Work["engagement"], { en: string; es: string }>
 };
 
 export const WORK: Work[] = [
+  {
+    slug: "kolo-rutas",
+    name: "KOLO Rutas",
+    year: 2026,
+    yearLabel: "2026",
+    type: { en: "Mobile · Field Ops", es: "Móvil · Operación" },
+    industries: ["apps", "saas"],
+    engagement: "fulltime",
+    color: "#0891B2",
+    en: "Distribution ops for field operarios — routes, visits and collection in one Flutter app for GT·SV·HN.",
+    es: "Operación de distribución para operarios en campo — rutas, visitas y cobro en una app Flutter para GT·SV·HN.",
+    metrics: [
+      { v: "101", en: "screens designed", es: "pantallas diseñadas" },
+      { v: "57", en: "PRs merged", es: "PRs mergeados" },
+      { v: "4 mo", en: "to shipped", es: "hasta lanzada" },
+    ],
+    img: "/work/kolo-rutas.png",
+    caseUrl: "https://operarioscase.vercel.app",
+    featured: true,
+    live: null,
+  },
   {
     slug: "kolo",
     name: "KOLO Manager App",
@@ -119,7 +142,6 @@ export const WORK: Work[] = [
       { v: "4 mo", en: "idea to shipped", es: "de idea a entregado" },
       { v: "NL", en: "remote client", es: "cliente remoto" },
     ],
-    featured: true,
     live: null,
   },
   {

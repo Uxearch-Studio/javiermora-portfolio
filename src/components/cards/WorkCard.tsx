@@ -34,44 +34,60 @@ export default function WorkCard({
       {/* Área de imagen — mockup abstracto con el color del proyecto */}
       <div
         className="relative h-[170px] w-full overflow-hidden shrink-0"
-        style={{ background: `linear-gradient(145deg, ${p.color}28 0%, ${p.color}10 100%)` }}
+        style={{ background: p.img ? "#0A0A0A" : `linear-gradient(145deg, ${p.color}28 0%, ${p.color}10 100%)` }}
       >
-        <div className="absolute inset-0 p-4 flex flex-col gap-2 justify-center">
-          <div className="h-2 rounded-full w-3/4 opacity-20" style={{ background: p.color }} />
-          <div className="h-1.5 rounded-full w-1/2 opacity-12" style={{ background: p.color }} />
-          <div className="flex gap-1.5 mt-1">
-            <div className="h-6 rounded w-1/3 opacity-15" style={{ background: p.color }} />
-            <div className="h-6 rounded w-1/4 opacity-10" style={{ background: p.color }} />
-          </div>
-          <div className="h-1 rounded-full w-2/3 opacity-08" style={{ background: p.color }} />
-        </div>
-        {/* Grid sutil */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `repeating-linear-gradient(0deg, ${p.color} 0px, ${p.color} 1px, transparent 1px, transparent 24px),
-                              repeating-linear-gradient(90deg, ${p.color} 0px, ${p.color} 1px, transparent 1px, transparent 24px)`,
-          }}
-        />
-        {/* Badges: tipo + año */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5">
-          <span
-            className="text-[9px] font-mono px-1.5 py-[2px] rounded"
-            style={{ background: `${p.color}30`, color: p.color }}
-          >
-            {en ? p.type.en : p.type.es}
-          </span>
-        </div>
-        <span
-          className="absolute top-3 right-3 text-[10px] font-mono px-1.5 py-[2px] rounded"
-          style={{ background: `${p.color}25`, color: p.color }}
-        >
-          {p.yearLabel}
-        </span>
-        <div
-          className="absolute inset-x-0 bottom-0 h-8"
-          style={{ background: "linear-gradient(to top, white 0%, transparent 100%)" }}
-        />
+        {p.img ? (
+          /* imagen diseñada 860x340 — recorte centrado en anchos angostos */
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={p.img}
+            alt={`${p.name} — preview`}
+            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        ) : (
+          <>
+            <div className="absolute inset-0 p-4 flex flex-col gap-2 justify-center">
+              <div className="h-2 rounded-full w-3/4 opacity-20" style={{ background: p.color }} />
+              <div className="h-1.5 rounded-full w-1/2 opacity-12" style={{ background: p.color }} />
+              <div className="flex gap-1.5 mt-1">
+                <div className="h-6 rounded w-1/3 opacity-15" style={{ background: p.color }} />
+                <div className="h-6 rounded w-1/4 opacity-10" style={{ background: p.color }} />
+              </div>
+              <div className="h-1 rounded-full w-2/3 opacity-08" style={{ background: p.color }} />
+            </div>
+            {/* Grid sutil */}
+            <div
+              className="absolute inset-0 opacity-[0.03]"
+              style={{
+                backgroundImage: `repeating-linear-gradient(0deg, ${p.color} 0px, ${p.color} 1px, transparent 1px, transparent 24px),
+                                  repeating-linear-gradient(90deg, ${p.color} 0px, ${p.color} 1px, transparent 1px, transparent 24px)`,
+              }}
+            />
+          </>
+        )}
+        {/* Badges + fade: solo sobre el mockup generado — la imagen diseñada va limpia */}
+        {!p.img && (
+          <>
+            <div className="absolute top-3 left-3 flex items-center gap-1.5">
+              <span
+                className="text-[9px] font-mono px-1.5 py-[2px] rounded"
+                style={{ background: `${p.color}30`, color: p.color }}
+              >
+                {en ? p.type.en : p.type.es}
+              </span>
+            </div>
+            <span
+              className="absolute top-3 right-3 text-[10px] font-mono px-1.5 py-[2px] rounded"
+              style={{ background: `${p.color}25`, color: p.color }}
+            >
+              {p.yearLabel}
+            </span>
+            <div
+              className="absolute inset-x-0 bottom-0 h-8"
+              style={{ background: "linear-gradient(to top, white 0%, transparent 100%)" }}
+            />
+          </>
+        )}
       </div>
 
       <div className="p-3 flex flex-col flex-1">

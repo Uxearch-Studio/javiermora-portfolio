@@ -282,9 +282,13 @@ export default function CasesView() {
               key={p.slug}
               p={p}
               lang={lang}
-              onClick={() => setSelected(p)}
-              ctaEn={p.caseStudy ? "View Case Study" : "View Details"}
-              ctaEs={p.caseStudy ? "Ver Caso de Estudio" : "Ver Detalles"}
+              onClick={() =>
+                p.caseUrl
+                  ? window.open(p.caseUrl, "_blank", "noopener")
+                  : setSelected(p)
+              }
+              ctaEn={p.caseStudy || p.caseUrl ? "View Case Study" : "View Details"}
+              ctaEs={p.caseStudy || p.caseUrl ? "Ver Caso de Estudio" : "Ver Detalles"}
             />
           ))}
         </motion.div>

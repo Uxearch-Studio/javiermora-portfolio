@@ -1406,7 +1406,11 @@ export default function HomeView() {
               p={p}
               lang={lang}
               variants={popUp}
-              onClick={() => setActive("cases")}
+              onClick={() =>
+                p.caseUrl
+                  ? window.open(p.caseUrl, "_blank", "noopener")
+                  : setActive("cases")
+              }
             />
           ))}
 
